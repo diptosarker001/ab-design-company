@@ -6,6 +6,19 @@
     <title>প্রোডাক্ট ডিটেলস - AB Design Company</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .loading {
+            text-align: center;
+            padding: 50px;
+            font-size: 18px;
+            color: #666;
+        }
+        .error {
+            text-align: center;
+            padding: 50px;
+            color: #e74c3c;
+        }
+    </style>
 </head>
 <body>
     <!-- নেভিগেশন বার -->
@@ -26,33 +39,8 @@
     <!-- প্রোডাক্ট ডিটেল সেকশন -->
     <section class="product-detail">
         <div class="container">
-            <div class="product-detail-container">
-                <div class="product-images">
-                    <img src="images/logo-1.jpg" alt="প্রোডাক্ট" id="product-image" onerror="this.src='https://via.placeholder.com/500x500'">
-                </div>
-                <div class="product-info">
-                    <h1 id="product-title">রেস্টুরেন্ট লোগো</h1>
-                    <div class="product-meta">
-                        <span class="price" id="product-price">৫০০ টাকা</span>
-                        <span class="category" id="product-category">লোগো</span>
-                    </div>
-                    <div class="product-description" id="product-description">
-                        <p>এটি একটি আধুনিক রেস্টুরেন্টের জন্য তৈরি আকর্ষণীয় লোগো। মিনিমালিস্ট ডিজাইন যা সহজেই মনে রাখা যায়।</p>
-                    </div>
-                    <div class="product-features">
-                        <h3>এই প্যাকেজে যা থাকছে:</h3>
-                        <ul id="product-features">
-                            <li>PNG ফাইল (স্বচ্ছ ব্যাকগ্রাউন্ড সহ)</li>
-                            <li>JPG ফাইল</li>
-                            <li>PDF ফাইল (প্রিন্টের জন্য)</li>
-                            <li>সোর্স ফাইল (EPS)</li>
-                            <li>সীমাহীন রিভিশন</li>
-                        </ul>
-                    </div>
-                    <button class="buy-now-btn" onclick="openWhatsApp()">
-                        <i class="fab fa-whatsapp"></i> এখনই অর্ডার করুন
-                    </button>
-                </div>
+            <div class="product-detail-container" id="product-container">
+                <div class="loading">🔄 প্রোডাক্ট লোড হচ্ছে...</div>
             </div>
         </div>
     </section>
@@ -99,20 +87,119 @@
     </footer>
 
     <script>
-        // URL থেকে প্রোডাক্ট আইডি নেওয়া এবং ডিটেলস লোড করা
+        // পৃষ্ঠা লোড হওয়ার সাথে সাথে প্রোডাক্ট ডিটেলস লোড করুন
         document.addEventListener('DOMContentLoaded', function() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const productId = urlParams.get('id');
-            
-            if (productId) {
-                // এখানে আপনি GitHub API কল করে প্রোডাক্ট ডিটেলস লোড করতে পারেন
-                console.log('Loading product:', productId);
-            }
+            loadProductDetails();
         });
+
+        // URL থেকে প্রোডাক্ট টাইটেল নিয়ে ডিটেলস লোড করা
+        async function loadProductDetails() {
+            const container = document.getElementById('product-container');
+            
+            // URL থেকে প্যারামিটার নেওয়া
+            const urlParams = new URLSearchParams(window.location.search);
+            const productTitle = urlParams.get('title');
+            
+            if (!productTitle) {
+                container.innerHTML = '<div class="error">❌ প্রোডাক্ট পাওয়া যায়নি</div>';
+                return;
+            }
+            
+            try {
+                // GitHub API কল করে সব প্রোডাক্ট আনা
+                const response = await fetch('https://api.github.com/repos/diptosarker001/ab-design-company/contents/products');
+                
+                if (!response.ok) {
+                    throw new Error('GitHub API response not ok');
+                }
+                
+                const files = await response.json();
+                let foundProduct = null;
+                
+                // প্রতিটি .json ফাইল চেক করা
+                for (const file of files) {
+                    if (file.name.endsWith('.json')) {
+                        const contentResponse = await fetch(file.download_url);
+                        const product = await contentResponse.json();
+                        
+                        if (product.title === decodeURIComponent(productTitle)) {
+                            foundProduct = product;
+                            break;
+                        }
+                    }
+                }
+                
+                if (foundProduct) {
+                    displayProductDetails(foundProduct);
+                } else {
+                    container.innerHTML = '<div class="error">❌ প্রোডাক্ট পাওয়া যায়নি</div>';
+                }
+                
+            } catch (error) {
+                console.error('প্রোডাক্ট লোড করতে সমস্যা:', error);
+                container.innerHTML = '<div class="error">❌ প্রোডাক্ট লোড করতে সমস্যা হয়েছে</div>';
+            }
+        }
         
-        function openWhatsApp() {
+        // প্রোডাক্ট ডিটেলস দেখানো
+        function displayProductDetails(product) {
+            const container = document.getElementById('product-container');
+            
+            // ছবির URL ঠিক করা
+            let imageUrl = product.image;
+            if (!imageUrl) {
+                imageUrl = 'https://via.placeholder.com/500x500?text=No+Image';
+            }
+            
+            // ফিচার লিস্ট তৈরি (যদি থাকে)
+            let featuresHtml = '';
+            if (product.features && product.features.length > 0) {
+                featuresHtml = `
+                    <div class="product-features">
+                        <h3>এই প্যাকেজে যা থাকছে:</h3>
+                        <ul>
+                            ${product.features.map(f => `<li>${f}</li>`).join('')}
+                        </ul>
+                    </div>
+                `;
+            } else {
+                featuresHtml = `
+                    <div class="product-features">
+                        <h3>এই প্যাকেজে যা থাকছে:</h3>
+                        <ul>
+                            <li>PNG ফাইল (স্বচ্ছ ব্যাকগ্রাউন্ড সহ)</li>
+                            <li>JPG ফাইল</li>
+                            <li>সীমাহীন রিভিশন</li>
+                        </ul>
+                    </div>
+                `;
+            }
+            
+            container.innerHTML = `
+                <div class="product-images">
+                    <img src="${imageUrl}" alt="${product.title}" 
+                         onerror="this.src='https://via.placeholder.com/500x500?text=Image+Error'">
+                </div>
+                <div class="product-info">
+                    <h1>${product.title}</h1>
+                    <div class="product-meta">
+                        <span class="price">${product.price} টাকা</span>
+                        <span class="category">${product.category}</span>
+                    </div>
+                    <div class="product-description">
+                        <p>${product.description || 'কোনো বিবরণ দেওয়া হয়নি'}</p>
+                    </div>
+                    ${featuresHtml}
+                    <button class="buy-now-btn" onclick="openWhatsApp('${product.title}')">
+                        <i class="fab fa-whatsapp"></i> এখনই অর্ডার করুন
+                    </button>
+                </div>
+            `;
+        }
+        
+        // WhatsApp অর্ডার ফাংশন
+        function openWhatsApp(productTitle) {
             const phoneNumber = '8801XXXXXXXXX'; // আপনার WhatsApp নম্বর দিন
-            const productTitle = document.getElementById('product-title').textContent;
             const message = encodeURIComponent(`হাই, আমি "${productTitle}" প্রোডাক্টটি কিনতে চাই।`);
             window.open(`https://wa.me/${phoneNumber}?text=${message}`, '_blank');
         }
