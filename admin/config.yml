@@ -2,7 +2,8 @@ backend:
   name: github
   repo: আপনার-ইউজারনেম/ab-design-company
   branch: main
-  site_domain: আপনার-ইউজারনেম.github.io
+  auth_type: implicit  # এই লাইনটা আগেই দিয়েছেন, এটা ঠিক আছে
+  # base_url বাদ দিন - এটাই সমস্যা তৈরি করছিল
 
 media_folder: "images"
 public_folder: "/images"
