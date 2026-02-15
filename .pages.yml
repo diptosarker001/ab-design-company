@@ -1,36 +1,11 @@
 media:
   - name: images
-    label: Images
-    type: folder
     path: images
 
 content:
   - name: products
-    label: Products
-    type: collection
     path: products
     fields:
       - name: title
-        label: Title
-        type: string
-        required: true
-      - name: category
-        label: Category
-        type: string
-        options:
-          - Logo
-          - Social Media Banner
-          - Printables
-          - Freebies
-      - name: price
-        label: Price (BDT)
-        type: number
-        required: true
       - name: image
-        label: Image
         type: image
-        required: true
-      - name: description
-        label: Description
-        type: text
-        required: true
