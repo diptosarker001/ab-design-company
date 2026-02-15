@@ -6,6 +6,24 @@
     <title>আমাদের ডিজাইন - AB Design Company</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .loading {
+            text-align: center;
+            padding: 50px;
+            font-size: 18px;
+            color: #666;
+        }
+        .error {
+            text-align: center;
+            padding: 50px;
+            color: #e74c3c;
+        }
+        .no-products {
+            text-align: center;
+            padding: 50px;
+            color: #666;
+        }
+    </style>
 </head>
 <body>
     <!-- নেভিগেশন বার -->
@@ -35,11 +53,11 @@
     <section class="filter-section">
         <div class="container">
             <div class="filter-buttons">
-                <button class="filter-btn active">সব</button>
-                <button class="filter-btn">লোগো</button>
-                <button class="filter-btn">সোশ্যাল মিডিয়া ব্যানার</button>
-                <button class="filter-btn">প্রিন্টেবলস</button>
-                <button class="filter-btn">ফ্রিবিস</button>
+                <button class="filter-btn active" onclick="filterProducts('সব')">সব</button>
+                <button class="filter-btn" onclick="filterProducts('লোগো')">লোগো</button>
+                <button class="filter-btn" onclick="filterProducts('সোশ্যাল মিডিয়া ব্যানার')">সোশ্যাল মিডিয়া ব্যানার</button>
+                <button class="filter-btn" onclick="filterProducts('প্রিন্টেবলস')">প্রিন্টেবলস</button>
+                <button class="filter-btn" onclick="filterProducts('ফ্রিবিস')">ফ্রিবিস</button>
             </div>
         </div>
     </section>
@@ -48,7 +66,7 @@
     <section class="featured-products">
         <div class="container">
             <div class="product-grid" id="products-container">
-                <!-- JavaScript ডায়নামিক্যালি প্রোডাক্ট লোড করবে -->
+                <div class="loading">🔄 প্রোডাক্ট লোড হচ্ছে...</div>
             </div>
         </div>
     </section>
@@ -94,6 +112,155 @@
         </div>
     </footer>
 
-    <script src="script.js"></script>
+    <script>
+        // গ্লোবাল ভেরিয়েবল
+        let allProducts = [];
+
+        // পৃষ্ঠা লোড হওয়ার সাথে সাথে প্রোডাক্ট লোড করুন
+        document.addEventListener('DOMContentLoaded', function() {
+            loadProducts();
+        });
+
+        // GitHub থেকে প্রোডাক্ট লোড করার ফাংশন
+        async function loadProducts() {
+            const container = document.getElementById('products-container');
+            
+            try {
+                // GitHub API কল করে products ফোল্ডারের কন্টেন্ট আনা
+                const response = await fetch('https://api.github.com/repos/diptosarker001/ab-design-company/contents/products');
+                
+                if (!response.ok) {
+                    throw new Error('GitHub API response not ok');
+                }
+                
+                const files = await response.json();
+                const products = [];
+                
+                // প্রতিটি .json ফাইল পড়ে ডাটা বের করা
+                for (const file of files) {
+                    if (file.name.endsWith('.json')) {
+                        const contentResponse = await fetch(file.download_url);
+                        const product = await contentResponse.json();
+                        
+                        // ডাটা ভ্যালিডেশন
+                        if (product.title && product.category) {
+                            products.push({
+                                ...product,
+                                filename: file.name
+                            });
+                        }
+                    }
+                }
+                
+                // সব প্রোডাক্ট সংরক্ষণ
+                allProducts = products;
+                
+                // প্রোডাক্ট দেখানো
+                displayProducts(products);
+                
+            } catch (error) {
+                console.error('প্রোডাক্ট লোড করতে সমস্যা:', error);
+                container.innerHTML = '<div class="error">❌ প্রোডাক্ট লোড করতে সমস্যা হয়েছে। কিছুক্ষণ পর আবার চেষ্টা করুন।</div>';
+                
+                // এরর হলে ডেমো প্রোডাক্ট দেখানো (ঐচ্ছিক)
+                showDemoProducts();
+            }
+        }
+        
+        // ডেমো প্রোডাক্ট দেখানোর ফাংশন (যদি API কাজ না করে)
+        function showDemoProducts() {
+            const demoProducts = [
+                {
+                    title: 'রেস্টুরেন্ট লোগো',
+                    category: 'লোগো',
+                    price: '৫০০',
+                    image: 'https://via.placeholder.com/300x200?text=Logo+1',
+                    description: 'আধুনিক রেস্টুরেন্টের জন্য আকর্ষণীয় লোগো'
+                },
+                {
+                    title: 'ফ্যাশন হাউস লোগো',
+                    category: 'লোগো',
+                    price: '৫০০',
+                    image: 'https://via.placeholder.com/300x200?text=Logo+2',
+                    description: 'লেডিস ফ্যাশন ব্র্যান্ডের জন্য এলিগেন্ট লোগো'
+                },
+                {
+                    title: 'টেক স্টার্টআপ লোগো',
+                    category: 'লোগো',
+                    price: '৬০০',
+                    image: 'https://via.placeholder.com/300x200?text=Logo+3',
+                    description: 'টেকনোলজি কোম্পানির জন্য মডার্ন লোগো'
+                }
+            ];
+            
+            allProducts = demoProducts;
+            displayProducts(demoProducts);
+        }
+        
+        // প্রোডাক্ট দেখানোর ফাংশন
+        function displayProducts(products) {
+            const container = document.getElementById('products-container');
+            
+            if (products.length === 0) {
+                container.innerHTML = '<div class="no-products">📭 কোনো প্রোডাক্ট পাওয়া যায়নি</div>';
+                return;
+            }
+            
+            let html = '';
+            products.forEach(product => {
+                // ছবির URL ঠিক করা
+                let imageUrl = product.image;
+                if (imageUrl && imageUrl.startsWith('data:image')) {
+                    // Base64 ছবি সরাসরি ব্যবহার করা যাবে
+                } else if (!imageUrl) {
+                    imageUrl = 'https://via.placeholder.com/300x200?text=No+Image';
+                }
+                
+                html += `
+                    <div class="product-card" data-category="${product.category}">
+                        <img src="${imageUrl}" alt="${product.title}" 
+                             onerror="this.src='https://via.placeholder.com/300x200?text=Image+Error'">
+                        <h3>${product.title}</h3>
+                        <p class="category">${product.category}</p>
+                        <p class="price">${product.price} টাকা</p>
+                        <a href="product.html?title=${encodeURIComponent(product.title)}" class="btn">বিস্তারিত দেখুন</a>
+                    </div>
+                `;
+            });
+            
+            container.innerHTML = html;
+        }
+        
+        // ফিল্টার ফাংশন
+        function filterProducts(category) {
+            const products = document.querySelectorAll('.product-card');
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            
+            // ফিল্টার বাটন আপডেট
+            filterBtns.forEach(btn => {
+                if (btn.textContent === category || (category === 'সব' && btn.textContent === 'সব')) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+            
+            // প্রোডাক্ট ফিল্টার
+            products.forEach(product => {
+                if (category === 'সব' || product.dataset.category === category) {
+                    product.style.display = 'block';
+                } else {
+                    product.style.display = 'none';
+                }
+            });
+        }
+        
+        // ছবি লোড না হলে ডিফল্ট ছবি দেখানোর জন্য
+        window.addEventListener('error', function(e) {
+            if (e.target.tagName === 'IMG') {
+                e.target.src = 'https://via.placeholder.com/300x200?text=Image+Error';
+            }
+        }, true);
+    </script>
 </body>
 </html>
