@@ -1,36 +1,36 @@
 media:
   - name: images
-    label: ছবি
+    label: Images
     type: folder
     path: images
 
 content:
   - name: products
-    label: প্রোডাক্টস
+    label: Products
     type: collection
     path: products
     fields:
       - name: title
-        label: প্রোডাক্টের নাম
+        label: Title
         type: string
         required: true
       - name: category
-        label: ক্যাটাগরি
+        label: Category
         type: string
         options:
-          - লোগো
-          - সোশ্যাল মিডিয়া ব্যানার
-          - প্রিন্টেবলস
-          - ফ্রিবিস
+          - Logo
+          - Social Media Banner
+          - Printables
+          - Freebies
       - name: price
-        label: মূল্য (টাকায়)
+        label: Price (BDT)
         type: number
         required: true
       - name: image
-        label: প্রোডাক্টের ছবি
+        label: Image
         type: image
         required: true
       - name: description
-        label: বিস্তারিত বিবরণ
+        label: Description
         type: text
         required: true
