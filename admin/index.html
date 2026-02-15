@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AB Design - অ্যাডমিন প্যানেল</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f0f2f5;
+            color: #333;
+        }
+        
+        /* লগইন পৃষ্ঠা */
+        .login-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .login-box {
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            width: 100%;
+            max-width: 400px;
+        }
+        
+        .login-box h1 {
+            text-align: center;
+            margin-bottom: 10px;
+            color: #333;
+            font-size: 28px;
+        }
+        
+        .login-box h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #667eea;
+            font-size: 18px;
+            font-weight: normal;
+        }
+        
+        .login-box input {
+            width: 100%;
+            padding: 12px 15px;
+            margin-bottom: 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 5px;
+            font-size: 14px;
+            transition: border 0.3s;
+        }
+        
+        .login-box input:focus {
+            border-color: #667eea;
+            outline: none;
+        }
+        
+        .login-box button {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: opacity 0.3s;
+        }
+        
+        .login-box button:hover {
+            opacity: 0.9;
+        }
+        
+        .error-message {
+            color: #e74c3c;
+            margin-bottom: 15px;
+            text-align: center;
+            font-size: 14px;
+            display: none;
+        }
+        
+        .info-text {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 13px;
+            color: #666;
+        }
+        
+        .info-text a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        /* অ্যাডমিন ড্যাশবোর্ড */
+        .dashboard {
+            display: none;
+            min-height: 100vh;
+        }
+        
+        .sidebar {
+            width: 250px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            position: fixed;
+            height: 100vh;
+            padding: 20px;
+        }
+        
+        .sidebar h2 {
+            margin-bottom: 30px;
+            font-size: 22px;
+            text-align: center;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+        }
+        
+        .sidebar ul {
+            list-style: none;
+        }
+        
+        .sidebar li {
+            margin-bottom: 10px;
+        }
+        
+        .sidebar a {
+            color: white;
+            text-decoration: none;
+            display: block;
+            padding: 12px 15px;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+        
+        .sidebar a:hover, .sidebar a.active {
+            background: rgba(255,255,255,0.2);
+        }
+        
+        .main-content {
+            margin-left: 250px;
+            padding: 30px;
+        }
+        
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .header h1 {
+            font-size: 24px;
+            color: #333;
+        }
+        
+        .logout-btn {
+            padding: 8px 20px;
+            background: #e74c3c;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        
+        .add-btn {
+            background: #2ecc71;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+        
+        .add-btn:hover {
+            background: #27ae60;
+        }
+        
+        /* টেবিল */
+        .table-container {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            overflow-x: auto;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        th {
+            background: #f8f9fa;
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+            color: #555;
+        }
+        
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        tr:hover {
+            background: #f8f9fa;
+        }
+        
+        .product-image {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+        
+        .action-btn {
+            padding: 5px 10px;
+            margin: 0 3px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+        
+        .edit-btn {
+            background: #3498db;
+            color: white;
+        }
+        
+        .delete-btn {
+            background: #e74c3c;
+            color: white;
+        }
+        
+        /* মডাল */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        
+        .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 500px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        
+        .modal-content h3 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+        
+        .modal-content input,
+        .modal-content select,
+        .modal-content textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        
+        .modal-content textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        
+        .modal-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+            margin-top: 20px;
+        }
+        
+        .modal-buttons button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        
+        .save-btn {
+            background: #2ecc71;
+            color: white;
+        }
+        
+        .cancel-btn {
+            background: #95a5a6;
+            color: white;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 50px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <!-- লগইন পৃষ্ঠা -->
+    <div class="login-container" id="login-page">
+        <div class="login-box">
+            <h1>🎨 AB Design</h1>
+            <h2>অ্যাডমিন প্যানেল</h2>
+            
+            <div class="error-message" id="login-error"></div>
+            
+            <input type="text" id="username" placeholder="GitHub ইউজারনেম" value="diptosarker001">
+            <input type="password" id="token" placeholder="GitHub Personal Access Token">
+            
+            <button onclick="login()">লগইন করুন</button>
+            
+            <div class="info-text">
+                <p>Token তৈরি করতে <a href="https://github.com/settings/tokens/new?scopes=repo" target="_blank">এখানে ক্লিক করুন</a></p>
+                <p style="font-size:12px; margin-top:10px;">Token-এ <strong>repo</strong> permission দিতে ভুলবেন না</p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- অ্যাডমিন ড্যাশবোর্ড -->
+    <div class="dashboard" id="dashboard">
+        <div class="sidebar">
+            <h2>AB Design</h2>
+            <ul>
+                <li><a href="#" onclick="showSection('products')" class="active" id="menu-products">📦 প্রোডাক্টস</a></li>
+                <li><a href="#" onclick="showSection('settings')" id="menu-settings">⚙️ সেটিংস</a></li>
+            </ul>
+        </div>
+        
+        <div class="main-content">
+            <div class="header">
+                <h1 id="page-title">প্রোডাক্টস</h1>
+                <button class="logout-btn" onclick="logout()">লগআউট</button>
+            </div>
+            
+            <!-- প্রোডাক্টস সেকশন -->
+            <div id="products-section">
+                <button class="add-btn" onclick="openAddModal()">+ নতুন প্রোডাক্ট</button>
+                
+                <div class="table-container" id="products-table-container">
+                    <div class="loading">প্রোডাক্ট লোড হচ্ছে...</div>
+                </div>
+            </div>
+            
+            <!-- সেটিংস সেকশন -->
+            <div id="settings-section" style="display: none;">
+                <div class="table-container">
+                    <h3 style="margin-bottom: 20px;">GitHub সংযোগ</h3>
+                    <p><strong>রিপোজিটরি:</strong> diptosarker001/ab-design-company</p>
+                    <p><strong>ব্রাঞ্চ:</strong> main</p>
+                    <p><strong>স্ট্যাটাস:</strong> <span style="color: #2ecc71;">সংযুক্ত</span></p>
+                    
+                    <h3 style="margin: 30px 0 20px;">পরিসংখ্যান</h3>
+                    <p><strong>মোট প্রোডাক্ট:</strong> <span id="total-products">0</span></p>
+                    <p><strong>ছবির ফোল্ডার:</strong> images/</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- অ্যাড/এডিট মডাল -->
+    <div class="modal" id="product-modal">
+        <div class="modal-content">
+            <h3 id="modal-title">নতুন প্রোডাক্ট</h3>
+            
+            <input type="text" id="product-title" placeholder="প্রোডাক্টের নাম">
+            
+            <select id="product-category">
+                <option value="">ক্যাটাগরি নির্বাচন করুন</option>
+                <option value="লোগো">লোগো</option>
+                <option value="সোশ্যাল মিডিয়া ব্যানার">সোশ্যাল মিডিয়া ব্যানার</option>
+                <option value="প্রিন্টেবলস">প্রিন্টেবলস</option>
+                <option value="ফ্রিবিস">ফ্রিবিস</option>
+            </select>
+            
+            <input type="number" id="product-price" placeholder="মূল্য (টাকায়)">
+            
+            <div style="margin-bottom: 15px;">
+                <label style="display: block; margin-bottom: 5px;">ছবি:</label>
+                <input type="file" id="product-image" accept="image/*">
+                <div id="image-preview" style="margin-top: 10px;"></div>
+            </div>
+            
+            <textarea id="product-description" placeholder="বিবরণ"></textarea>
+            
+            <input type="hidden" id="edit-filename">
+            
+            <div class="modal-buttons">
+                <button class="save-btn" onclick="saveProduct()">সেভ করুন</button>
+                <button class="cancel-btn" onclick="closeModal()">বাতিল</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // গ্লোবাল ভেরিয়েবল
+        let githubToken = '';
+        let githubUser = '';
+        let products = [];
+        
+        // লগইন ফাংশন
+        async function login() {
+            const username = document.getElementById('username').value;
+            const token = document.getElementById('token').value;
+            
+            if (!username || !token) {
+                showError('ইউজারনেম এবং টোকেন দিন');
+                return;
+            }
+            
+            try {
+                const response = await fetch('https://api.github.com/user', {
+                    headers: {
+                        'Authorization': `token ${token}`
+                    }
+                });
+                
+                if (!response.ok) {
+                    throw new Error('Invalid token');
+                }
+                
+                const user = await response.json();
+                
+                // সংরক্ষণ
+                githubToken = token;
+                githubUser = user;
+                sessionStorage.setItem('github_token', token);
+                sessionStorage.setItem('github_user', JSON.stringify(user));
+                
+                // ড্যাশবোর্ড দেখান
+                document.getElementById('login-page').style.display = 'none';
+                document.getElementById('dashboard').style.display = 'block';
+                
+                // প্রোডাক্ট লোড করুন
+                loadProducts();
+                
+            } catch (error) {
+                showError('টোকেন ভুল বা মেয়াদোত্তীর্ণ');
+            }
+        }
+        
+        // চেক করা যদি আগে থেকে লগইন করা থাকে
+        (function() {
+            const token = sessionStorage.getItem('github_token');
+            const user = sessionStorage.getItem('github_user');
+            
+            if (token && user) {
+                githubToken = token;
+                githubUser = JSON.parse(user);
+                document.getElementById('login-page').style.display = 'none';
+                document.getElementById('dashboard').style.display = 'block';
+                loadProducts();
+            }
+        })();
+        
+        // লগআউট
+        function logout() {
+            sessionStorage.removeItem('github_token');
+            sessionStorage.removeItem('github_user');
+            window.location.reload();
+        }
+        
+        // সেকশন দেখান
+        function showSection(section) {
+            if (section === 'products') {
+                document.getElementById('products-section').style.display = 'block';
+                document.getElementById('settings-section').style.display = 'none';
+                document.getElementById('page-title').textContent = 'প্রোডাক্টস';
+                
+                // মেনু আপডেট
+                document.getElementById('menu-products').classList.add('active');
+                document.getElementById('menu-settings').classList.remove('active');
+                
+                // প্রোডাক্ট রিফ্রেশ
+                loadProducts();
+                
+            } else {
+                document.getElementById('products-section').style.display = 'none';
+                document.getElementById('settings-section').style.display = 'block';
+                document.getElementById('page-title').textContent = 'সেটিংস';
+                
+                // মেনু আপডেট
+                document.getElementById('menu-products').classList.remove('active');
+                document.getElementById('menu-settings').classList.add('active');
+                
+                // মোট প্রোডাক্ট আপডেট
+                document.getElementById('total-products').textContent = products.length;
+            }
+        }
+        
+        // প্রোডাক্ট লোড
+        async function loadProducts() {
+            const container = document.getElementById('products-table-container');
+            container.innerHTML = '<div class="loading">প্রোডাক্ট লোড হচ্ছে...</div>';
+            
+            try {
+                // products ফোল্ডারের কন্টেন্ট আনা
+                const response = await fetch('https://api.github.com/repos/diptosarker001/ab-design-company/contents/products', {
+                    headers: {
+                        'Authorization': `token ${githubToken}`
+                    }
+                });
+                
+                if (!response.ok) {
+                    throw new Error('ফাইল লোড করতে সমস্যা');
+                }
+                
+                const files = await response.json();
+                products = [];
+                
+                let tableHtml = `
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ছবি</th>
+                                <th>নাম</th>
+                                <th>ক্যাটাগরি</th>
+                                <th>মূল্য</th>
+                                <th>অ্যাকশন</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                `;
+                
+                for (const file of files) {
+                    if (file.name.endsWith('.json')) {
+                        const contentResponse = await fetch(file.download_url);
+                        const product = await contentResponse.json();
+                        products.push(product);
+                        
+                        tableHtml += `
+                            <tr>
+                                <td><img src="${product.image || 'https://via.placeholder.com/50'}" class="product-image"></td>
+                                <td>${product.title}</td>
+                                <td>${product.category}</td>
+                                <td>${product.price} টাকা</td>
+                                <td>
+                                    <button class="action-btn edit-btn" onclick="openEditModal('${file.name}')">এডিট</button>
+                                    <button class="action-btn delete-btn" onclick="deleteProduct('${file.name}')">ডিলিট</button>
+                                </td>
+                            </tr>
+                        `;
+                    }
+                }
+                
+                tableHtml += '</tbody></table>';
+                container.innerHTML = tableHtml;
+                document.getElementById('total-products').textContent = products.length;
+                
+            } catch (error) {
+                container.innerHTML = '<div class="loading">প্রোডাক্ট লোড করতে সমস্যা</div>';
+                console.error(error);
+            }
+        }
+        
+        // মডাল খোলা (নতুন)
+        function openAddModal() {
+            document.getElementById('modal-title').textContent = 'নতুন প্রোডাক্ট';
+            document.getElementById('product-title').value = '';
+            document.getElementById('product-category').value = '';
+            document.getElementById('product-price').value = '';
+            document.getElementById('product-description').value = '';
+            document.getElementById('image-preview').innerHTML = '';
+            document.getElementById('edit-filename').value = '';
+            
+            document.getElementById('product-modal').style.display = 'flex';
+        }
+        
+        // মডাল খোলা (এডিট)
+        async function openEditModal(filename) {
+            try {
+                const response = await fetch(`https://raw.githubusercontent.com/diptosarker001/ab-design-company/main/products/${filename}`, {
+                    headers: {
+                        'Authorization': `token ${githubToken}`
+                    }
+                });
+                
+                const product = await response.json();
+                
+                document.getElementById('modal-title').textContent = 'প্রোডাক্ট এডিট';
+                document.getElementById('product-title').value = product.title || '';
+                document.getElementById('product-category').value = product.category || '';
+                document.getElementById('product-price').value = product.price || '';
+                document.getElementById('product-description').value = product.description || '';
+                document.getElementById('edit-filename').value = filename;
+                
+                if (product.image) {
+                    document.getElementById('image-preview').innerHTML = `<img src="${product.image}" style="max-width: 100px; max-height: 100px;">`;
+                }
+                
+                document.getElementById('product-modal').style.display = 'flex';
+                
+            } catch (error) {
+                alert('প্রোডাক্ট লোড করতে সমস্যা');
+            }
+        }
+        
+        // মডাল বন্ধ
+        function closeModal() {
+            document.getElementById('product-modal').style.display = 'none';
+        }
+        
+        // প্রোডাক্ট সেভ
+        async function saveProduct() {
+            const title = document.getElementById('product-title').value;
+            const category = document.getElementById('product-category').value;
+            const price = document.getElementById('product-price').value;
+            const description = document.getElementById('product-description').value;
+            const filename = document.getElementById('edit-filename').value;
+            
+            if (!title || !category || !price || !description) {
+                alert('সব ফিল্ড পূরণ করুন');
+                return;
+            }
+            
+            // ছবি আপলোড (যদি থাকে)
+            const imageFile = document.getElementById('product-image').files[0];
+            let imageUrl = '';
+            
+            if (imageFile) {
+                // ছবি base64 এ কনভার্ট
+                const reader = new FileReader();
+                reader.readAsDataURL(imageFile);
+                await new Promise(resolve => { reader.onload = resolve; });
+                imageUrl = reader.result;
+            }
+            
+            const productData = {
+                title: title,
+                category: category,
+                price: price,
+                description: description,
+                image: imageUrl || document.getElementById('image-preview').querySelector('img')?.src || ''
+            };
+            
+            // JSON ফাইল তৈরি
+            const jsonContent = JSON.stringify(productData, null, 2);
+            const newFilename = filename || `${title.toLowerCase().replace(/ /g, '-')}.json`;
+            
+            try {
+                // GitHub-এ আপলোড
+                const response = await fetch(`https://api.github.com/repos/diptosarker001/ab-design-company/contents/products/${newFilename}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Authorization': `token ${githubToken}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        message: filename ? `Update ${title}` : `Add ${title}`,
+                        content: btoa(unescape(encodeURIComponent(jsonContent)))
+                    })
+                });
+                
+                if (!response.ok) {
+                    throw new Error('আপলোড করতে সমস্যা');
+                }
+                
+                closeModal();
+                loadProducts();
+                
+            } catch (error) {
+                alert('সেভ করতে সমস্যা');
+                console.error(error);
+            }
+        }
+        
+        // প্রোডাক্ট ডিলিট
+        async function deleteProduct(filename) {
+            if (!confirm('নিশ্চিতভাবে ডিলিট করতে চান?')) {
+                return;
+            }
+            
+            try {
+                // আগে ফাইলের SHA বের করা
+                const fileResponse = await fetch(`https://api.github.com/repos/diptosarker001/ab-design-company/contents/products/${filename}`, {
+                    headers: {
+                        'Authorization': `token ${githubToken}`
+                    }
+                });
+                
+                const fileData = await fileResponse.json();
+                
+                // ডিলিট করা
+                const response = await fetch(`https://api.github.com/repos/diptosarker001/ab-design-company/contents/products/${filename}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Authorization': `token ${githubToken}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        message: `Delete ${filename}`,
+                        sha: fileData.sha
+                    })
+                });
+                
+                if (!response.ok) {
+                    throw new Error('ডিলিট করতে সমস্যা');
+                }
+                
+                loadProducts();
+                
+            } catch (error) {
+                alert('ডিলিট করতে সমস্যা');
+                console.error(error);
+            }
+        }
+        
+        // এরর দেখানো
+        function showError(message) {
+            const errorDiv = document.getElementById('login-error');
+            errorDiv.textContent = message;
+            errorDiv.style.display = 'block';
+            setTimeout(() => {
+                errorDiv.style.display = 'none';
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
