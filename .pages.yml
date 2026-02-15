@@ -23,7 +23,7 @@ content:
           - প্রিন্টেবলস
           - ফ্রিবিস
       - name: price
-        label: মূল্য (টাকায়)
+        label: মূল্য (টাকায়)
         type: number
         required: true
       - name: image
