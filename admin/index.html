@@ -4,9 +4,142 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Content Manager</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: #f5f8fa;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+    }
+    .login-container {
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      padding: 40px;
+      max-width: 400px;
+      width: 90%;
+    }
+    h1 {
+      color: #2c3e50;
+      font-size: 24px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    .info {
+      background: #e3f2fd;
+      border-left: 4px solid #2196f3;
+      padding: 12px;
+      margin-bottom: 20px;
+      font-size: 14px;
+    }
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: #34495e;
+    }
+    input {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #dde2e7;
+      border-radius: 4px;
+      font-size: 14px;
+      box-sizing: border-box;
+      margin-bottom: 20px;
+    }
+    button {
+      background: #2c3e50;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      padding: 12px 20px;
+      font-size: 16px;
+      font-weight: 600;
+      width: 100%;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    button:hover {
+      background: #1a252f;
+    }
+    .token-link {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 13px;
+    }
+    .token-link a {
+      color: #3498db;
+      text-decoration: none;
+    }
+  </style>
 </head>
 <body>
-  <!-- শুধু Decap CMS স্ক্রিপ্ট রাখুন, identity widget টি বাদ দিন -->
-  <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+  <div class="login-container">
+    <h1>🔐 AB Design CMS</h1>
+    
+    <div class="info">
+      <strong>GitHub Token দিয়ে লগইন করুন</strong><br>
+      Token তৈরি করতে <a href="https://github.com/settings/tokens" target="_blank">এখানে ক্লিক করুন</a> এবং <strong>repo</strong> permissions দিন।
+    </div>
+    
+    <form id="login-form">
+      <label for="token">GitHub Personal Access Token</label>
+      <input type="password" id="token" placeholder="ghp_xxxxxxxxxxxx" required>
+      
+      <button type="submit">লগইন করুন</button>
+    </form>
+    
+    <div class="token-link">
+      <a href="https://github.com/settings/tokens/new?scopes=repo" target="_blank">
+        ➕ নতুন Token তৈরি করুন
+      </a>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('login-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const token = document.getElementById('token').value.trim();
+      
+      if (!token) {
+        alert('দয়া করে Token দিন');
+        return;
+      }
+      
+      // Token ভ্যালিডেট করা
+      try {
+        const response = await fetch('https://api.github.com/user', {
+          headers: {
+            'Authorization': `token ${token}`
+          }
+        });
+        
+        if (!response.ok) {
+          throw new Error('Invalid token');
+        }
+        
+        const user = await response.json();
+        
+        // Token sessionStorage-এ সংরক্ষণ করা
+        sessionStorage.setItem('github_token', token);
+        sessionStorage.setItem('github_user', JSON.stringify(user));
+        
+        // CMS পৃষ্ঠায় রিডাইরেক্ট
+        window.location.href = 'index.html?cms=1';
+        
+      } catch (error) {
+        alert('Token ভুল বা মেয়াদোত্তীর্ণ। আবার চেষ্টা করুন।');
+      }
+    });
+    
+    // চেক করা যদি ইতিমধ্যে লগইন করা থাকে
+    if (sessionStorage.getItem('github_token')) {
+      window.location.href = 'index.html?cms=1';
+    }
+  </script>
 </body>
 </html>
