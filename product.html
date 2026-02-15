@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>প্রোডাক্ট ডিটেলস - AB Design Company</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- নেভিগেশন বার -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">
+                <h1>AB Design</h1>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">হোম</a></li>
+                <li><a href="shop.html">শপ</a></li>
+                <li><a href="about.html">আমাদের সম্পর্কে</a></li>
+                <li><a href="custom.html">কাস্টম অর্ডার</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- প্রোডাক্ট ডিটেল সেকশন -->
+    <section class="product-detail">
+        <div class="container">
+            <div class="product-detail-container">
+                <div class="product-images">
+                    <img src="images/logo-1.jpg" alt="প্রোডাক্ট" id="product-image" onerror="this.src='https://via.placeholder.com/500x500'">
+                </div>
+                <div class="product-info">
+                    <h1 id="product-title">রেস্টুরেন্ট লোগো</h1>
+                    <div class="product-meta">
+                        <span class="price" id="product-price">৫০০ টাকা</span>
+                        <span class="category" id="product-category">লোগো</span>
+                    </div>
+                    <div class="product-description" id="product-description">
+                        <p>এটি একটি আধুনিক রেস্টুরেন্টের জন্য তৈরি আকর্ষণীয় লোগো। মিনিমালিস্ট ডিজাইন যা সহজেই মনে রাখা যায়।</p>
+                    </div>
+                    <div class="product-features">
+                        <h3>এই প্যাকেজে যা থাকছে:</h3>
+                        <ul id="product-features">
+                            <li>PNG ফাইল (স্বচ্ছ ব্যাকগ্রাউন্ড সহ)</li>
+                            <li>JPG ফাইল</li>
+                            <li>PDF ফাইল (প্রিন্টের জন্য)</li>
+                            <li>সোর্স ফাইল (EPS)</li>
+                            <li>সীমাহীন রিভিশন</li>
+                        </ul>
+                    </div>
+                    <button class="buy-now-btn" onclick="openWhatsApp()">
+                        <i class="fab fa-whatsapp"></i> এখনই অর্ডার করুন
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ফুটার -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>AB Design Company</h3>
+                    <p>আমরা তৈরি করি আপনার স্বপ্নের ডিজাইন। সততা ও আন্তরিকতা আমাদের মূলমন্ত্র।</p>
+                </div>
+                <div class="footer-section">
+                    <h3>দ্রুত লিংক</h3>
+                    <ul>
+                        <li><a href="index.html">হোম</a></li>
+                        <li><a href="shop.html">শপ</a></li>
+                        <li><a href="about.html">আমাদের সম্পর্কে</a></li>
+                        <li><a href="custom.html">কাস্টম অর্ডার</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>যোগাযোগ</h3>
+                    <ul>
+                        <li><i class="fas fa-phone"></i> ০১৭XXXXXXXX</li>
+                        <li><i class="fas fa-envelope"></i> info@abdesign.com</li>
+                        <li><i class="fas fa-map-marker-alt"></i> ঢাকা, বাংলাদেশ</li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>ফলো করুন</h3>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-whatsapp"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 AB Design Company - সমস্ত অধিকার সংরক্ষিত</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // URL থেকে প্রোডাক্ট আইডি নেওয়া এবং ডিটেলস লোড করা
+        document.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const productId = urlParams.get('id');
+            
+            if (productId) {
+                // এখানে আপনি GitHub API কল করে প্রোডাক্ট ডিটেলস লোড করতে পারেন
+                console.log('Loading product:', productId);
+            }
+        });
+        
+        function openWhatsApp() {
+            const phoneNumber = '8801XXXXXXXXX'; // আপনার WhatsApp নম্বর দিন
+            const productTitle = document.getElementById('product-title').textContent;
+            const message = encodeURIComponent(`হাই, আমি "${productTitle}" প্রোডাক্টটি কিনতে চাই।`);
+            window.open(`https://wa.me/${phoneNumber}?text=${message}`, '_blank');
+        }
+    </script>
+</body>
+</html>

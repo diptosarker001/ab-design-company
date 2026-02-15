@@ -1,0 +1,39 @@
+content:
+  - name: products
+    label: প্রোডাক্টস
+    type: collection
+    path: products
+    fields:
+      - name: title
+        label: প্রোডাক্টের নাম
+        type: string
+        required: true
+      - name: category
+        label: ক্যাটাগরি
+        type: string
+        options:
+          - লোগো
+          - সোশ্যাল মিডিয়া ব্যানার
+          - প্রিন্টেবলস
+          - ফ্রিবিস
+      - name: price
+        label: মূল্য (টাকায়)
+        type: number
+        required: true
+      - name: image
+        label: প্রোডাক্টের ছবি
+        type: image
+        required: true
+      - name: description
+        label: বিস্তারিত বিবরণ
+        type: text
+        required: true
+      - name: files
+        label: ডাউনলোড ফাইল (PNG, JPG, PDF)
+        type: file
+        multiple: true
+      - name: features
+        label: ফিচারসমূহ
+        type: list
+        items:
+          type: string
