@@ -6,410 +6,6 @@
     <title>AB Design Company - সাশ্রয়ী মূল্যে ডিজিটাল ডিজাইন</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <style>
-        /* হোমপেজের জন্য অতিরিক্ত স্টাইল */
-        .hero-section {
-            position: relative;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            overflow: hidden;
-        }
-        
-        .hero-section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="%23ffffff" fill-opacity="0.1" d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,122.7C672,117,768,139,864,154.7C960,171,1056,181,1152,170.7C1248,160,1344,128,1392,112L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>') no-repeat bottom;
-            background-size: cover;
-            opacity: 0.1;
-        }
-        
-        .hero-content {
-            position: relative;
-            z-index: 2;
-            text-align: center;
-            padding: 120px 0;
-            color: white;
-        }
-        
-        .hero-title {
-            font-size: 3.5rem;
-            font-weight: 800;
-            margin-bottom: 20px;
-            line-height: 1.2;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
-        }
-        
-        .hero-subtitle {
-            font-size: 1.3rem;
-            margin-bottom: 30px;
-            opacity: 0.95;
-            max-width: 700px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        
-        .hero-buttons {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-            margin-top: 40px;
-        }
-        
-        .hero-btn {
-            padding: 15px 35px;
-            border-radius: 50px;
-            font-weight: 600;
-            text-decoration: none;
-            transition: all 0.3s;
-            font-size: 1.1rem;
-        }
-        
-        .hero-btn-primary {
-            background: white;
-            color: #667eea;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-        }
-        
-        .hero-btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
-        }
-        
-        .hero-btn-secondary {
-            border: 2px solid white;
-            color: white;
-            background: transparent;
-        }
-        
-        .hero-btn-secondary:hover {
-            background: white;
-            color: #667eea;
-            transform: translateY(-3px);
-        }
-        
-        /* ফিচার সেকশন */
-        .features-section {
-            padding: 80px 0;
-            background: #f8fafc;
-        }
-        
-        .section-header {
-            text-align: center;
-            margin-bottom: 60px;
-        }
-        
-        .section-header h2 {
-            font-size: 2.5rem;
-            color: #2d3748;
-            margin-bottom: 15px;
-            font-weight: 700;
-        }
-        
-        .section-header p {
-            font-size: 1.1rem;
-            color: #718096;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-        
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
-            margin-top: 50px;
-        }
-        
-        .feature-card {
-            background: white;
-            padding: 40px 30px;
-            border-radius: 15px;
-            text-align: center;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
-            transition: all 0.3s;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .feature-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, #667eea, #764ba2);
-            transform: scaleX(0);
-            transition: transform 0.3s;
-        }
-        
-        .feature-card:hover::before {
-            transform: scaleX(1);
-        }
-        
-        .feature-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 8px 30px rgba(102, 126, 234, 0.15);
-        }
-        
-        .feature-icon {
-            width: 80px;
-            height: 80px;
-            background: linear-gradient(135deg, #667eea20, #764ba220);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 25px;
-        }
-        
-        .feature-icon i {
-            font-size: 2.5rem;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        
-        .feature-card h3 {
-            font-size: 1.4rem;
-            color: #2d3748;
-            margin-bottom: 15px;
-            font-weight: 600;
-        }
-        
-        .feature-card p {
-            color: #718096;
-            line-height: 1.6;
-        }
-        
-        /* পরিসংখ্যান সেকশন */
-        .stats-section {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            padding: 60px 0;
-            color: white;
-        }
-        
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 40px;
-            text-align: center;
-        }
-        
-        .stat-item {
-            padding: 20px;
-        }
-        
-        .stat-number {
-            font-size: 3rem;
-            font-weight: 800;
-            margin-bottom: 10px;
-            line-height: 1;
-        }
-        
-        .stat-label {
-            font-size: 1.1rem;
-            opacity: 0.9;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        
-        /* কাজের প্রক্রিয়া সেকশন */
-        .process-section {
-            padding: 80px 0;
-            background: white;
-        }
-        
-        .process-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 30px;
-            margin-top: 50px;
-        }
-        
-        .process-step {
-            text-align: center;
-            position: relative;
-        }
-        
-        .step-number {
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            font-size: 1.8rem;
-            font-weight: 700;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 25px;
-            position: relative;
-            z-index: 2;
-        }
-        
-        .process-step h3 {
-            font-size: 1.3rem;
-            color: #2d3748;
-            margin-bottom: 15px;
-            font-weight: 600;
-        }
-        
-        .process-step p {
-            color: #718096;
-            line-height: 1.6;
-        }
-        
-        /* সিটিএ সেকশন */
-        .cta-section {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            padding: 80px 0;
-            text-align: center;
-            color: white;
-        }
-        
-        .cta-section h2 {
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 20px;
-        }
-        
-        .cta-section p {
-            font-size: 1.2rem;
-            margin-bottom: 30px;
-            opacity: 0.95;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        
-        .cta-btn {
-            display: inline-block;
-            padding: 15px 40px;
-            background: white;
-            color: #667eea;
-            text-decoration: none;
-            border-radius: 50px;
-            font-weight: 600;
-            font-size: 1.1rem;
-            transition: all 0.3s;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-        }
-        
-        .cta-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
-        }
-        
-        /* ফুটার */
-        .footer {
-            background: #1a202c;
-            color: white;
-            padding: 60px 0 20px;
-        }
-        
-        .footer-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 40px;
-            margin-bottom: 40px;
-        }
-        
-        .footer-section h3 {
-            font-size: 1.2rem;
-            margin-bottom: 20px;
-            color: white;
-            font-weight: 600;
-        }
-        
-        .footer-section p {
-            color: #a0aec0;
-            line-height: 1.6;
-            margin-bottom: 20px;
-        }
-        
-        .footer-section ul {
-            list-style: none;
-        }
-        
-        .footer-section ul li {
-            margin-bottom: 10px;
-        }
-        
-        .footer-section ul li a {
-            color: #a0aec0;
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-        
-        .footer-section ul li a:hover {
-            color: white;
-        }
-        
-        .social-links {
-            display: flex;
-            gap: 15px;
-            margin-top: 20px;
-        }
-        
-        .social-links a {
-            width: 40px;
-            height: 40px;
-            background: rgba(255,255,255,0.1);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            text-decoration: none;
-            transition: all 0.3s;
-        }
-        
-        .social-links a:hover {
-            background: #667eea;
-            transform: translateY(-3px);
-        }
-        
-        .footer-bottom {
-            text-align: center;
-            padding-top: 20px;
-            border-top: 1px solid rgba(255,255,255,0.1);
-            color: #a0aec0;
-            font-size: 0.9rem;
-        }
-        
-        /* রেস্পন্সিভ */
-        @media (max-width: 768px) {
-            .hero-title {
-                font-size: 2.5rem;
-            }
-            
-            .hero-subtitle {
-                font-size: 1.1rem;
-                padding: 0 20px;
-            }
-            
-            .hero-buttons {
-                flex-direction: column;
-                gap: 15px;
-                padding: 0 20px;
-            }
-            
-            .section-header h2 {
-                font-size: 2rem;
-            }
-            
-            .stats-grid {
-                gap: 20px;
-            }
-            
-            .stat-number {
-                font-size: 2.5rem;
-            }
-        }
-    </style>
 </head>
 <body>
     <!-- নেভিগেশন বার -->
@@ -428,147 +24,53 @@
     </nav>
 
     <!-- হিরো সেকশন -->
-    <section class="hero-section">
-        <div class="hero-content">
-            <div class="container">
-                <h1 class="hero-title">সাশ্রয়ী মূল্যে আপনার ব্যবসার জন্য সেরা ডিজাইন</h1>
-                <p class="hero-subtitle">পেশাদার ডিজিটাল ডিজাইন যা আপনার ব্র্যান্ডকে তুলে ধরবে। ৫০০+ সন্তুষ্ট ক্লায়েন্ট, ১০০০+ প্রজেক্ট সম্পন্ন।</p>
-                <div class="hero-buttons">
-                    <a href="shop.html" class="hero-btn hero-btn-primary">ডিজাইন দেখুন</a>
-                    <a href="custom.html" class="hero-btn hero-btn-secondary">কাস্টম অর্ডার করুন</a>
-                </div>
-            </div>
+    <section class="hero">
+        <div class="container">
+            <h2>সাশ্রয়ী মূল্যে আপনার ব্যবসার জন্য সেরা ডিজাইন</h2>
+            <p>পেশাদার ডিজিটাল ডিজাইন যা আপনার ব্র্যান্ডকে তুলে ধরবে</p>
+            <a href="shop.html" class="cta-button">ডিজাইন দেখুন</a>
         </div>
     </section>
 
-    <!-- ফিচার সেকশন -->
-    <section class="features-section">
+    <!-- ফিচারড প্রোডাক্ট -->
+    <section class="featured-products">
         <div class="container">
-            <div class="section-header">
-                <h2>আমরা কেন সেরা?</h2>
-                <p>আমরা শুধু ডিজাইন তৈরি করি না, আমরা তৈরি করি আপনার স্বপ্নের প্রতিচ্ছবি</p>
-            </div>
-            
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-clock"></i>
-                    </div>
-                    <h3>দ্রুত ডেলিভারি</h3>
-                    <p>২৪-৪৮ ঘণ্টার মধ্যে ফাইনাল ডিজাইন ডেলিভারি। জরুরি প্রোজেক্টেও আমরা আছি আপনার পাশে।</p>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-rupee-sign"></i>
-                    </div>
-                    <h3>সাশ্রয়ী মূল্য</h3>
-                    <p>বাজেটের মধ্যে সেরা ডিজাইন। ছোট ব্যবসা ও স্টার্টআপদের জন্য বিশেষ প্যাকেজ।</p>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-heart"></i>
-                    </div>
-                    <h3>আন্তরিকতা</h3>
-                    <p>প্রতিটি প্রোজেক্টে আমরা দিই আমাদের শতভাগ effort, যেন সেটা আমাদের নিজের প্রোজেক্ট।</p>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-undo-alt"></i>
-                    </div>
-                    <h3>আনলিমিটেড রিভিশন</h3>
-                    <p>ততক্ষণ রিভিশন দিই, যতক্ষণ না আপনি ১০০% সন্তুষ্ট হন। আপনার সন্তুষ্টিই আমাদের লক্ষ্য।</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ফিচারড প্রোডাক্ট সেকশন -->
-    <section class="featured-products" style="padding: 80px 0; background: white;">
-        <div class="container">
-            <div class="section-header">
-                <h2>আমাদের সেরা ডিজাইন</h2>
-                <p>দেখুন আমাদের কিছু জনপ্রিয় ডিজাইন</p>
-            </div>
-            
+            <h2 class="section-title">আমাদের সেরা ডিজাইন</h2>
             <div class="product-grid" id="products-container">
-                <div class="loading">🔄 প্রোডাক্ট লোড হচ্ছে...</div>
+                <div class="loading">প্রোডাক্ট লোড হচ্ছে...</div>
             </div>
-            
-            <div style="text-align: center; margin-top: 50px;">
-                <a href="shop.html" class="hero-btn hero-btn-primary" style="background: linear-gradient(135deg, #667eea, #764ba2); color: white; display: inline-block;">সব ডিজাইন দেখুন</a>
-            </div>
-        </div>
-    </section>
-
-    <!-- পরিসংখ্যান সেকশন -->
-    <section class="stats-section">
-        <div class="container">
-            <div class="stats-grid">
-                <div class="stat-item">
-                    <div class="stat-number">৫০০+</div>
-                    <div class="stat-label">সন্তুষ্ট ক্লায়েন্ট</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number">১০০০+</div>
-                    <div class="stat-label">প্রজেক্ট সম্পন্ন</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number">২৪/৭</div>
-                    <div class="stat-label">সাপোর্ট</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number">১০০%</div>
-                    <div class="stat-label">আন্তরিকতা</div>
-                </div>
+            <div style="text-align: center; margin-top: 40px;">
+                <a href="shop.html" class="cta-button" style="background: linear-gradient(135deg, #667eea, #764ba2); color: white;">সব ডিজাইন দেখুন</a>
             </div>
         </div>
     </section>
 
-    <!-- কাজের প্রক্রিয়া সেকশন -->
-    <section class="process-section">
+    <!-- সার্ভিস লিস্ট -->
+    <section class="services">
         <div class="container">
-            <div class="section-header">
-                <h2>আমাদের কাজের প্রক্রিয়া</h2>
-                <p>৪টি সহজ ধাপে আপনার পছন্দের ডিজাইন</p>
-            </div>
-            
-            <div class="process-grid">
-                <div class="process-step">
-                    <div class="step-number">১</div>
-                    <h3>ডিজাইন নির্বাচন</h3>
-                    <p>আমাদের গ্যালারি থেকে আপনার পছন্দের ডিজাইন নির্বাচন করুন অথবা কাস্টম অর্ডার দিন।</p>
+            <h2 class="section-title">আমাদের সেবাসমূহ</h2>
+            <div class="service-grid">
+                <div class="service-card">
+                    <i class="fas fa-paint-brush"></i>
+                    <h3>লোগো ডিজাইন</h3>
+                    <p>আপনার ব্র্যান্ডের জন্য ইউনিক এবং মেমোরেবল লোগো</p>
                 </div>
-                
-                <div class="process-step">
-                    <div class="step-number">২</div>
-                    <h3>অর্ডার কনফার্ম</h3>
-                    <p>আপনার প্রয়োজনীয়তা নিয়ে আলোচনা করে অর্ডার কনফার্ম করুন।</p>
+                <div class="service-card">
+                    <i class="fas fa-image"></i>
+                    <h3>সোশ্যাল মিডিয়া ব্যানার</h3>
+                    <p>ফেসবুক, ইনস্টাগ্রামের জন্য আকর্ষণীয় ব্যানার</p>
                 </div>
-                
-                <div class="process-step">
-                    <div class="step-number">৩</div>
-                    <h3>ডিজাইন তৈরি</h3>
-                    <p>আমরা তৈরি করি আপনার ডিজাইন, আপনাকে দেখাই প্রিভিউ।</p>
+                <div class="service-card">
+                    <i class="fas fa-id-card"></i>
+                    <h3>বিজনেস কার্ড</h3>
+                    <p>পেশাদার বিজনেস কার্ড ডিজাইন</p>
                 </div>
-                
-                <div class="process-step">
-                    <div class="step-number">৪</div>
-                    <h3>ডেলিভারি</h3>
-                    <p>ফাইনাল ডিজাইন হস্তান্তর। সাথে ফিউচার সাপোর্ট।</p>
+                <div class="service-card">
+                    <i class="fas fa-gift"></i>
+                    <h3>ফ্রি রিসোর্স</h3>
+                    <p>নতুনদের জন্য বিনামূল্যে ডিজাইন টেমপ্লেট</p>
                 </div>
             </div>
-        </div>
-    </section>
-
-    <!-- কাস্টম অর্ডার সিটিএ -->
-    <section class="cta-section">
-        <div class="container">
-            <h2>আপনার নিজস্ব ডিজাইন চান?</h2>
-            <p>আপনার চিন্তা আমাদের বলুন, আমরা তৈরি করে দেব আপনার স্বপ্নের ডিজাইন। ফ্রি কনসালটেশন।</p>
-            <a href="custom.html" class="cta-btn">কাস্টম অর্ডার করুন</a>
         </div>
     </section>
 
@@ -578,7 +80,27 @@
             <div class="footer-content">
                 <div class="footer-section">
                     <h3>AB Design Company</h3>
-                    <p>আমরা তৈরি করি আপনার স্বপ্নের ডিজাইন। সততা ও আন্তরিকতা আমাদের মূলমন্ত্র। ২০২৪ সালে যাত্রা শুরু, লক্ষ্য সবার জন্য পেশাদার ডিজাইন।</p>
+                    <p>আমরা তৈরি করি আপনার স্বপ্নের ডিজাইন। সততা ও আন্তরিকতা আমাদের মূলমন্ত্র।</p>
+                </div>
+                <div class="footer-section">
+                    <h3>দ্রুত লিংক</h3>
+                    <ul>
+                        <li><a href="index.html">হোম</a></li>
+                        <li><a href="shop.html">শপ</a></li>
+                        <li><a href="about.html">আমাদের সম্পর্কে</a></li>
+                        <li><a href="custom.html">কাস্টম অর্ডার</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>যোগাযোগ</h3>
+                    <ul>
+                        <li><i class="fas fa-phone"></i> ০১৭XXXXXXXX</li>
+                        <li><i class="fas fa-envelope"></i> info@abdesign.com</li>
+                        <li><i class="fas fa-map-marker-alt"></i> ঢাকা, বাংলাদেশ</li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>ফলো করুন</h3>
                     <div class="social-links">
                         <a href="#"><i class="fab fa-facebook"></i></a>
                         <a href="#"><i class="fab fa-instagram"></i></a>
@@ -586,46 +108,15 @@
                         <a href="#"><i class="fab fa-linkedin"></i></a>
                     </div>
                 </div>
-                
-                <div class="footer-section">
-                    <h3>দ্রুত লিংক</h3>
-                    <ul>
-                        <li><a href="index.html">হোম</a></li>
-                        <li><a href="shop.html">আমাদের ডিজাইন</a></li>
-                        <li><a href="about.html">আমাদের সম্পর্কে</a></li>
-                        <li><a href="custom.html">কাস্টম অর্ডার</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-section">
-                    <h3>সেবাসমূহ</h3>
-                    <ul>
-                        <li><a href="shop.html?category=লোগো">লোগো ডিজাইন</a></li>
-                        <li><a href="shop.html?category=সোশ্যাল মিডিয়া ব্যানার">সোশ্যাল মিডিয়া ব্যানার</a></li>
-                        <li><a href="shop.html?category=প্রিন্টেবলস">বিজনেস কার্ড</a></li>
-                        <li><a href="shop.html?category=ফ্রিবিস">ফ্রি রিসোর্স</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-section">
-                    <h3>যোগাযোগ</h3>
-                    <ul>
-                        <li><i class="fas fa-phone" style="margin-right: 10px;"></i> ০১৭XXXXXXXX</li>
-                        <li><i class="fas fa-envelope" style="margin-right: 10px;"></i> info@abdesign.com</li>
-                        <li><i class="fas fa-map-marker-alt" style="margin-right: 10px;"></i> ঢাকা, বাংলাদেশ</li>
-                        <li><i class="fas fa-clock" style="margin-right: 10px;"></i> সপ্তাহের ৭ দিন, ২৪/৭</li>
-                    </ul>
-                </div>
             </div>
-            
             <div class="footer-bottom">
-                <p>&copy; 2024 AB Design Company - সমস্ত অধিকার সংরক্ষিত।</p>
+                <p>&copy; 2024 AB Design Company - সমস্ত অধিকার সংরক্ষিত</p>
             </div>
         </div>
     </footer>
 
     <script>
-        // প্রোডাক্ট লোড করার ফাংশন (শুধু ৪টি দেখাবে)
+        // হোমপেজের জন্য প্রোডাক্ট লোড করার ফাংশন (শুধু 4টি দেখাবে)
         async function loadProducts() {
             const container = document.getElementById('products-container');
             
@@ -637,21 +128,15 @@
                 }
                 
                 const files = await response.json();
+                const jsonFiles = files.filter(file => file.name.endsWith('.json'));
                 const products = [];
                 
-                // শুধু JSON ফাইলগুলো নেওয়া
-                const jsonFiles = files.filter(file => file.name.endsWith('.json'));
-                
-                // প্রথম ৪টি প্রোডাক্ট নেওয়া
-                const filesToShow = jsonFiles.slice(0, 4);
-                
-                for (const file of filesToShow) {
+                // প্রথম 4টি প্রোডাক্ট নেওয়া
+                for (let i = 0; i < Math.min(4, jsonFiles.length); i++) {
+                    const file = jsonFiles[i];
                     const contentResponse = await fetch(file.download_url);
                     const product = await contentResponse.json();
-                    
-                    if (product.title && product.category) {
-                        products.push(product);
-                    }
+                    products.push(product);
                 }
                 
                 displayProducts(products);
@@ -659,45 +144,10 @@
             } catch (error) {
                 console.error('প্রোডাক্ট লোড করতে সমস্যা:', error);
                 container.innerHTML = '<div class="error">প্রোডাক্ট লোড করতে সমস্যা হয়েছে</div>';
-                
-                // এরর হলে ডেমো দেখানো
                 showDemoProducts();
             }
         }
         
-        // ডেমো প্রোডাক্ট
-        function showDemoProducts() {
-            const demoProducts = [
-                {
-                    title: 'রেস্টুরেন্ট লোগো',
-                    category: 'লোগো',
-                    price: '৫০০',
-                    image: 'https://via.placeholder.com/300x200?text=Restaurant+Logo',
-                },
-                {
-                    title: 'ফ্যাশন হাউস লোগো',
-                    category: 'লোগো',
-                    price: '৫০০',
-                    image: 'https://via.placeholder.com/300x200?text=Fashion+Logo',
-                },
-                {
-                    title: 'টেক স্টার্টআপ লোগো',
-                    category: 'লোগো',
-                    price: '৬০০',
-                    image: 'https://via.placeholder.com/300x200?text=Tech+Logo',
-                },
-                {
-                    title: 'ফেসবুক কভার',
-                    category: 'সোশ্যাল মিডিয়া ব্যানার',
-                    price: '৪০০',
-                    image: 'https://via.placeholder.com/300x200?text=Facebook+Cover',
-                }
-            ];
-            
-            displayProducts(demoProducts);
-        }
-        
-        // প্রোডাক্ট দেখানো
         function displayProducts(products) {
             const container = document.getElementById('products-container');
             
@@ -722,7 +172,16 @@
             container.innerHTML = html;
         }
         
-        // পৃষ্ঠা লোড হওয়ার সাথে সাথে প্রোডাক্ট লোড করুন
+        function showDemoProducts() {
+            const demoProducts = [
+                { title: 'রেস্টুরেন্ট লোগো', category: 'লোগো', price: '৫০০', image: 'https://via.placeholder.com/300x200?text=Restaurant+Logo' },
+                { title: 'ফ্যাশন লোগো', category: 'লোগো', price: '৫০০', image: 'https://via.placeholder.com/300x200?text=Fashion+Logo' },
+                { title: 'টেক লোগো', category: 'লোগো', price: '৬০০', image: 'https://via.placeholder.com/300x200?text=Tech+Logo' },
+                { title: 'ফেসবুক কভার', category: 'সোশ্যাল মিডিয়া ব্যানার', price: '৪০০', image: 'https://via.placeholder.com/300x200?text=Facebook+Cover' }
+            ];
+            displayProducts(demoProducts);
+        }
+        
         document.addEventListener('DOMContentLoaded', loadProducts);
     </script>
 </body>
