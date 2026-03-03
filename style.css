@@ -6,17 +6,16 @@
 }
 
 body {
-    font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     line-height: 1.6;
     color: #1e293b;
-    background-color: #ffffff;
-    overflow-x: hidden;
+    background: #ffffff;
 }
 
 .container {
-    max-width: 1280px;
+    max-width: 1200px;
     margin: 0 auto;
-    padding: 0 32px;
+    padding: 0 24px;
 }
 
 /* ===== টাইপোগ্রাফি ===== */
@@ -26,42 +25,41 @@ h1, h2, h3, h4 {
     color: #0f172a;
 }
 
-h1 { font-size: 3.5rem; }
-h2 { font-size: 2.5rem; margin-bottom: 1.5rem; }
-h3 { font-size: 1.5rem; margin-bottom: 1rem; }
+h1 { font-size: 2.5rem; }
+h2 { font-size: 2.2rem; }
+h3 { font-size: 1.3rem; }
 
 p {
     color: #475569;
-    margin-bottom: 1rem;
+    line-height: 1.7;
 }
 
 .section-title {
     text-align: center;
-    font-size: 2.5rem;
-    margin: 4rem 0 2rem;
+    font-size: 2.2rem;
+    margin: 60px 0 40px;
     position: relative;
 }
 
 .section-title::after {
     content: '';
     display: block;
-    width: 80px;
-    height: 4px;
+    width: 60px;
+    height: 3px;
     background: linear-gradient(90deg, #2563eb, #7c3aed);
-    margin: 1rem auto 0;
+    margin: 15px auto 0;
     border-radius: 2px;
 }
 
 /* ===== নেভিগেশন বার ===== */
 .navbar {
     background: white;
-    padding: 1.2rem 0;
+    padding: 16px 0;
     position: sticky;
     top: 0;
     z-index: 100;
     border-bottom: 1px solid #e2e8f0;
-    backdrop-filter: blur(10px);
-    background: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.02);
 }
 
 .navbar .container {
@@ -70,10 +68,7 @@ p {
     align-items: center;
 }
 
-/* লোগো */
 .logo {
-    display: flex;
-    align-items: center;
     cursor: pointer;
 }
 
@@ -83,14 +78,12 @@ p {
     background: linear-gradient(135deg, #2563eb, #7c3aed);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    letter-spacing: -0.5px;
 }
 
-/* নেভ লিংক */
 .nav-links {
     display: flex;
     list-style: none;
-    gap: 2.5rem;
+    gap: 32px;
 }
 
 .nav-links a {
@@ -98,9 +91,9 @@ p {
     text-decoration: none;
     font-weight: 500;
     font-size: 1rem;
-    transition: all 0.2s;
+    padding: 8px 0;
     position: relative;
-    padding: 0.5rem 0;
+    transition: color 0.2s;
 }
 
 .nav-links a::after {
@@ -111,7 +104,7 @@ p {
     width: 0;
     height: 2px;
     background: linear-gradient(90deg, #2563eb, #7c3aed);
-    transition: width 0.2s ease;
+    transition: width 0.2s;
 }
 
 .nav-links a:hover {
@@ -124,103 +117,93 @@ p {
 
 /* ===== হিরো সেকশন ===== */
 .hero {
-    padding: 6rem 0;
     background: linear-gradient(135deg, #f8fafc 0%, #eef2ff 100%);
+    padding: 100px 0;
     text-align: center;
 }
 
 .hero h2 {
-    font-size: 3.5rem;
-    margin-bottom: 1.5rem;
+    font-size: 3rem;
+    max-width: 800px;
+    margin: 0 auto 20px;
     background: linear-gradient(135deg, #1e293b, #2563eb);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
 .hero p {
-    font-size: 1.25rem;
+    font-size: 1.2rem;
     color: #475569;
     max-width: 600px;
-    margin: 0 auto 2.5rem;
+    margin: 0 auto 30px;
 }
 
 .cta-button {
     display: inline-block;
-    padding: 1rem 2.5rem;
+    padding: 14px 36px;
     background: #2563eb;
     color: white;
     text-decoration: none;
     border-radius: 50px;
     font-weight: 600;
     font-size: 1.1rem;
-    transition: all 0.3s;
     border: 1px solid #2563eb;
-    box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.1);
+    transition: all 0.3s;
+    box-shadow: 0 4px 10px rgba(37, 99, 235, 0.2);
 }
 
 .cta-button:hover {
     background: #1d4ed8;
     transform: translateY(-2px);
-    box-shadow: 0 10px 15px -3px rgba(37, 99, 235, 0.2);
-}
-
-.cta-button.secondary {
-    background: transparent;
-    color: #2563eb;
-    margin-left: 1rem;
-}
-
-.cta-button.secondary:hover {
-    background: #eef2ff;
-    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(37, 99, 235, 0.3);
 }
 
 /* ===== প্রোডাক্ট গ্রিড ===== */
 .product-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 2rem;
-    margin: 3rem 0;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 30px;
+    margin: 40px 0;
 }
 
 .product-card {
     background: white;
-    border-radius: 16px;
+    border-radius: 12px;
     overflow: hidden;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.02);
     border: 1px solid #e2e8f0;
+    transition: all 0.3s;
 }
 
 .product-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    transform: translateY(-5px);
+    box-shadow: 0 12px 24px rgba(0,0,0,0.05);
     border-color: #2563eb;
 }
 
 .product-card img {
     width: 100%;
-    height: 240px;
+    height: 200px;
     object-fit: cover;
     border-bottom: 1px solid #e2e8f0;
 }
 
 .product-card h3 {
-    padding: 1.5rem 1.5rem 0.5rem;
-    font-size: 1.25rem;
+    padding: 20px 20px 10px;
+    font-size: 1.2rem;
 }
 
 .product-card .category {
-    padding: 0 1.5rem;
+    padding: 0 20px;
     color: #2563eb;
-    font-size: 0.875rem;
+    font-size: 0.85rem;
     font-weight: 500;
     text-transform: uppercase;
     letter-spacing: 0.5px;
 }
 
 .product-card .price {
-    padding: 0.5rem 1.5rem;
+    padding: 10px 20px;
     font-size: 1.5rem;
     font-weight: 700;
     color: #0f172a;
@@ -235,16 +218,16 @@ p {
 
 .product-card .btn {
     display: block;
-    margin: 1rem 1.5rem 1.5rem;
-    padding: 0.875rem;
+    margin: 15px 20px 20px;
+    padding: 12px;
     background: #f8fafc;
     color: #1e293b;
     text-decoration: none;
     text-align: center;
-    border-radius: 50px;
+    border-radius: 8px;
     font-weight: 500;
-    transition: all 0.2s;
     border: 1px solid #e2e8f0;
+    transition: all 0.2s;
 }
 
 .product-card .btn:hover {
@@ -256,7 +239,7 @@ p {
 /* লোডিং স্টেট */
 .loading, .error, .no-products {
     text-align: center;
-    padding: 4rem;
+    padding: 60px;
     color: #64748b;
     font-size: 1.1rem;
     grid-column: 1 / -1;
@@ -266,68 +249,32 @@ p {
     color: #dc2626;
 }
 
-/* ===== ফিল্টার সেকশন ===== */
-.filter-section {
-    padding: 2rem 0;
-    border-bottom: 1px solid #e2e8f0;
-}
-
-.filter-buttons {
-    display: flex;
-    justify-content: center;
-    gap: 1rem;
-    flex-wrap: wrap;
-}
-
-.filter-btn {
-    padding: 0.75rem 1.5rem;
-    background: white;
-    border: 1px solid #e2e8f0;
-    color: #475569;
-    border-radius: 50px;
-    cursor: pointer;
-    font-size: 0.95rem;
-    font-weight: 500;
-    transition: all 0.2s;
-}
-
-.filter-btn:hover {
-    border-color: #2563eb;
-    color: #2563eb;
-}
-
-.filter-btn.active {
-    background: #2563eb;
-    border-color: #2563eb;
-    color: white;
-}
-
 /* ===== সার্ভিস গ্রিড ===== */
 .services {
-    padding: 4rem 0;
     background: #f8fafc;
+    padding: 40px 0 80px;
 }
 
 .service-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 2rem;
-    margin-top: 2rem;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 30px;
+    margin-top: 20px;
 }
 
 .service-card {
     background: white;
-    padding: 2.5rem 2rem;
-    border-radius: 16px;
+    padding: 40px 30px;
+    border-radius: 12px;
     text-align: center;
     border: 1px solid #e2e8f0;
     transition: all 0.3s;
 }
 
 .service-card:hover {
-    transform: translateY(-4px);
+    transform: translateY(-5px);
     border-color: #2563eb;
-    box-shadow: 0 20px 25px -5px rgba(37, 99, 235, 0.1);
+    box-shadow: 0 12px 24px rgba(37, 99, 235, 0.05);
 }
 
 .service-card i {
@@ -335,273 +282,46 @@ p {
     background: linear-gradient(135deg, #2563eb, #7c3aed);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    margin-bottom: 1.5rem;
+    margin-bottom: 20px;
 }
 
 .service-card h3 {
-    margin-bottom: 1rem;
+    margin-bottom: 15px;
+    color: #0f172a;
 }
 
 .service-card p {
     color: #64748b;
+    font-size: 0.95rem;
     line-height: 1.6;
-}
-
-/* ===== প্রোডাক্ট ডিটেল ===== */
-.product-detail {
-    padding: 4rem 0;
-}
-
-.product-detail-container {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 4rem;
-    align-items: start;
-}
-
-.product-images img {
-    width: 100%;
-    border-radius: 20px;
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
-}
-
-.product-info h1 {
-    font-size: 2.5rem;
-    margin-bottom: 1rem;
-}
-
-.product-meta {
-    margin-bottom: 2rem;
-    display: flex;
-    align-items: center;
-    gap: 1.5rem;
-}
-
-.product-meta .price {
-    font-size: 2rem;
-    font-weight: 700;
-    color: #2563eb;
-}
-
-.product-meta .price::before {
-    content: '৳';
-    font-size: 1.25rem;
-    margin-right: 4px;
-}
-
-.product-meta .category {
-    padding: 0.5rem 1rem;
-    background: #eef2ff;
-    color: #2563eb;
-    border-radius: 50px;
-    font-size: 0.875rem;
-    font-weight: 500;
-}
-
-.product-description {
-    margin-bottom: 2rem;
-}
-
-.product-description p {
-    font-size: 1.1rem;
-    color: #475569;
-    line-height: 1.8;
-}
-
-.product-features {
-    margin-bottom: 2rem;
-}
-
-.product-features h3 {
-    margin-bottom: 1rem;
-}
-
-.product-features ul {
-    list-style: none;
-}
-
-.product-features li {
-    margin-bottom: 0.75rem;
-    padding-left: 1.5rem;
-    position: relative;
-    color: #475569;
-}
-
-.product-features li::before {
-    content: "✓";
-    color: #2563eb;
-    position: absolute;
-    left: 0;
-    font-weight: 600;
-}
-
-.buy-now-btn {
-    padding: 1rem 2.5rem;
-    background: #2563eb;
-    color: white;
-    border: none;
-    border-radius: 50px;
-    font-size: 1.1rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s;
-}
-
-.buy-now-btn:hover {
-    background: #1d4ed8;
-    transform: translateY(-2px);
-    box-shadow: 0 10px 15px -3px rgba(37, 99, 235, 0.3);
-}
-
-/* ===== কাস্টম অর্ডার ফর্ম ===== */
-.custom-order {
-    padding: 4rem 0;
-}
-
-.order-form {
-    max-width: 600px;
-    margin: 0 auto;
-    background: white;
-    padding: 3rem;
-    border-radius: 20px;
-    border: 1px solid #e2e8f0;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-}
-
-.form-group {
-    margin-bottom: 1.5rem;
-}
-
-.form-group label {
-    display: block;
-    margin-bottom: 0.5rem;
-    font-weight: 500;
-    color: #1e293b;
-}
-
-.form-group input,
-.form-group select,
-.form-group textarea {
-    width: 100%;
-    padding: 0.875rem;
-    border: 1px solid #e2e8f0;
-    border-radius: 12px;
-    font-size: 1rem;
-    font-family: inherit;
-    transition: all 0.2s;
-}
-
-.form-group input:focus,
-.form-group select:focus,
-.form-group textarea:focus {
-    outline: none;
-    border-color: #2563eb;
-    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
-}
-
-.form-group textarea {
-    min-height: 120px;
-    resize: vertical;
-}
-
-.submit-btn {
-    width: 100%;
-    padding: 1rem;
-    background: #2563eb;
-    color: white;
-    border: none;
-    border-radius: 50px;
-    font-size: 1.1rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s;
-}
-
-.submit-btn:hover {
-    background: #1d4ed8;
-    transform: translateY(-2px);
-    box-shadow: 0 10px 15px -3px rgba(37, 99, 235, 0.3);
-}
-
-/* ===== অ্যাবাউট পৃষ্ঠা ===== */
-.about-section {
-    padding: 4rem 0;
-}
-
-.about-content {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 4rem;
-    align-items: center;
-}
-
-.about-text h2 {
-    font-size: 2.5rem;
-    margin-bottom: 1.5rem;
-}
-
-.about-text p {
-    font-size: 1.1rem;
-    margin-bottom: 1.5rem;
-}
-
-.about-image img {
-    width: 100%;
-    border-radius: 20px;
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
-}
-
-.stats-section {
-    background: linear-gradient(135deg, #2563eb, #7c3aed);
-    padding: 4rem 0;
-    color: white;
-}
-
-.stats-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 2rem;
-    text-align: center;
-}
-
-.stat-item h3 {
-    font-size: 3rem;
-    font-weight: 700;
-    margin-bottom: 0.5rem;
-    color: white;
-}
-
-.stat-item p {
-    font-size: 1.1rem;
-    opacity: 0.9;
-    color: white;
 }
 
 /* ===== ফুটার ===== */
 .footer {
     background: #0f172a;
     color: white;
-    padding: 4rem 0 2rem;
-    margin-top: 4rem;
+    padding: 60px 0 30px;
+    margin-top: 60px;
 }
 
 .footer-content {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 3rem;
-    margin-bottom: 3rem;
+    gap: 40px;
+    margin-bottom: 40px;
 }
 
 .footer-section h3 {
     color: white;
-    margin-bottom: 1.5rem;
     font-size: 1.1rem;
+    margin-bottom: 20px;
     font-weight: 600;
 }
 
 .footer-section p {
     color: #94a3b8;
     line-height: 1.7;
+    font-size: 0.95rem;
 }
 
 .footer-section ul {
@@ -609,13 +329,14 @@ p {
 }
 
 .footer-section ul li {
-    margin-bottom: 0.75rem;
+    margin-bottom: 12px;
 }
 
 .footer-section a {
     color: #94a3b8;
     text-decoration: none;
-    transition: all 0.2s;
+    font-size: 0.95rem;
+    transition: color 0.2s;
 }
 
 .footer-section a:hover {
@@ -624,89 +345,74 @@ p {
 
 .social-links {
     display: flex;
-    gap: 1rem;
-    margin-top: 1.5rem;
+    gap: 15px;
+    margin-top: 20px;
 }
 
 .social-links a {
-    width: 40px;
-    height: 40px;
-    background: rgba(255, 255, 255, 0.1);
+    width: 38px;
+    height: 38px;
+    background: rgba(255,255,255,0.05);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: white;
+    color: #94a3b8;
     transition: all 0.2s;
 }
 
 .social-links a:hover {
     background: #2563eb;
+    color: white;
     transform: translateY(-2px);
 }
 
 .footer-bottom {
     text-align: center;
-    padding-top: 2rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-    color: #94a3b8;
+    padding-top: 30px;
+    border-top: 1px solid rgba(255,255,255,0.05);
+    color: #64748b;
     font-size: 0.9rem;
 }
 
-/* ===== রেস্পন্সিভ ডিজাইন ===== */
+/* ===== রেস্পন্সিভ ===== */
 @media (max-width: 768px) {
     .nav-links {
         display: none;
     }
     
-    h1 { font-size: 2.5rem; }
-    h2 { font-size: 2rem; }
-    
     .hero h2 {
-        font-size: 2.5rem;
+        font-size: 2.2rem;
+        padding: 0 20px;
     }
     
     .hero p {
         font-size: 1.1rem;
-        padding: 0 1rem;
-    }
-    
-    .product-detail-container {
-        grid-template-columns: 1fr;
-        gap: 2rem;
-    }
-    
-    .about-content {
-        grid-template-columns: 1fr;
-        gap: 2rem;
-    }
-    
-    .filter-buttons {
-        gap: 0.5rem;
-    }
-    
-    .filter-btn {
-        padding: 0.5rem 1rem;
-        font-size: 0.875rem;
-    }
-    
-    .order-form {
-        padding: 2rem;
-    }
-}
-
-@media (max-width: 480px) {
-    .container {
         padding: 0 20px;
     }
     
-    .hero-buttons {
-        display: flex;
-        flex-direction: column;
-        gap: 1rem;
+    .section-title {
+        font-size: 1.8rem;
+        margin: 40px 0 30px;
     }
     
-    .cta-button.secondary {
-        margin-left: 0;
+    .product-grid {
+        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+        gap: 20px;
+    }
+    
+    .service-grid {
+        grid-template-columns: 1fr;
+        padding: 0 20px;
+    }
+    
+    .footer-content {
+        grid-template-columns: 1fr;
+        text-align: center;
+        gap: 30px;
+    }
+    
+    .social-links {
+        justify-content: center;
     }
 }
