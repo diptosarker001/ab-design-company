@@ -7,7 +7,7 @@
 
 body {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    line-height: 1.6;
+    line-height: 1.5;
     color: #1e293b;
     background: #ffffff;
 }
@@ -15,7 +15,7 @@ body {
 .container {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 0 24px;
+    padding: 0 20px;
 }
 
 /* ===== টাইপোগ্রাফি ===== */
@@ -26,12 +26,12 @@ h1, h2, h3, h4 {
 }
 
 h1 { font-size: 2.5rem; }
-h2 { font-size: 2.2rem; }
-h3 { font-size: 1.3rem; }
+h2 { font-size: 2.2rem; margin-bottom: 1.5rem; }
+h3 { font-size: 1.3rem; margin-bottom: 1rem; }
 
 p {
     color: #475569;
-    line-height: 1.7;
+    line-height: 1.6;
 }
 
 .section-title {
@@ -59,7 +59,6 @@ p {
     top: 0;
     z-index: 100;
     border-bottom: 1px solid #e2e8f0;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.02);
 }
 
 .navbar .container {
@@ -78,12 +77,14 @@ p {
     background: linear-gradient(135deg, #2563eb, #7c3aed);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+    margin: 0;
 }
 
 .nav-links {
     display: flex;
     list-style: none;
     gap: 32px;
+    margin: 0;
 }
 
 .nav-links a {
@@ -149,16 +150,20 @@ p {
     font-size: 1.1rem;
     border: 1px solid #2563eb;
     transition: all 0.3s;
-    box-shadow: 0 4px 10px rgba(37, 99, 235, 0.2);
+    cursor: pointer;
 }
 
 .cta-button:hover {
     background: #1d4ed8;
     transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(37, 99, 235, 0.3);
+    box-shadow: 0 8px 20px rgba(37, 99, 235, 0.2);
 }
 
 /* ===== প্রোডাক্ট গ্রিড ===== */
+.featured-products {
+    padding: 40px 0;
+}
+
 .product-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -170,9 +175,11 @@ p {
     background: white;
     border-radius: 12px;
     overflow: hidden;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.02);
     border: 1px solid #e2e8f0;
     transition: all 0.3s;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
 }
 
 .product-card:hover {
@@ -191,6 +198,7 @@ p {
 .product-card h3 {
     padding: 20px 20px 10px;
     font-size: 1.2rem;
+    margin: 0;
 }
 
 .product-card .category {
@@ -218,7 +226,7 @@ p {
 
 .product-card .btn {
     display: block;
-    margin: 15px 20px 20px;
+    margin: 10px 20px 20px;
     padding: 12px;
     background: #f8fafc;
     color: #1e293b;
@@ -249,10 +257,63 @@ p {
     color: #dc2626;
 }
 
+/* ===== শপ হেডার ===== */
+.shop-header {
+    background: linear-gradient(135deg, #f8fafc 0%, #eef2ff 100%);
+    padding: 60px 0;
+    text-align: center;
+}
+
+.shop-header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+}
+
+.shop-header p {
+    font-size: 1.2rem;
+    color: #475569;
+}
+
+/* ===== ফিল্টার সেকশন ===== */
+.filter-section {
+    padding: 30px 0;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.filter-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.filter-btn {
+    padding: 10px 25px;
+    background: white;
+    border: 1px solid #e2e8f0;
+    color: #475569;
+    border-radius: 50px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    font-weight: 500;
+    transition: all 0.2s;
+}
+
+.filter-btn:hover {
+    border-color: #2563eb;
+    color: #2563eb;
+}
+
+.filter-btn.active {
+    background: #2563eb;
+    border-color: #2563eb;
+    color: white;
+}
+
 /* ===== সার্ভিস গ্রিড ===== */
 .services {
     background: #f8fafc;
-    padding: 40px 0 80px;
+    padding: 60px 0;
 }
 
 .service-grid {
@@ -287,13 +348,242 @@ p {
 
 .service-card h3 {
     margin-bottom: 15px;
-    color: #0f172a;
 }
 
 .service-card p {
     color: #64748b;
     font-size: 0.95rem;
-    line-height: 1.6;
+}
+
+/* ===== প্রোডাক্ট ডিটেল ===== */
+.product-detail {
+    padding: 60px 0;
+}
+
+.product-detail-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 50px;
+    align-items: start;
+}
+
+.product-images img {
+    width: 100%;
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.05);
+}
+
+.product-info h1 {
+    font-size: 2.2rem;
+    margin-bottom: 20px;
+}
+
+.product-meta {
+    margin-bottom: 25px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.product-meta .price {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #2563eb;
+}
+
+.product-meta .price::before {
+    content: '৳';
+    font-size: 1.3rem;
+    margin-right: 5px;
+}
+
+.product-meta .category {
+    padding: 6px 16px;
+    background: #eef2ff;
+    color: #2563eb;
+    border-radius: 50px;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.product-description {
+    margin-bottom: 30px;
+}
+
+.product-description p {
+    font-size: 1.1rem;
+    color: #475569;
+    line-height: 1.8;
+}
+
+.product-features {
+    margin-bottom: 30px;
+}
+
+.product-features h3 {
+    margin-bottom: 15px;
+}
+
+.product-features ul {
+    list-style: none;
+}
+
+.product-features li {
+    margin-bottom: 10px;
+    padding-left: 25px;
+    position: relative;
+    color: #475569;
+}
+
+.product-features li::before {
+    content: "✓";
+    color: #2563eb;
+    position: absolute;
+    left: 0;
+    font-weight: 600;
+}
+
+.buy-now-btn {
+    padding: 14px 36px;
+    background: #2563eb;
+    color: white;
+    border: none;
+    border-radius: 50px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.buy-now-btn:hover {
+    background: #1d4ed8;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(37, 99, 235, 0.2);
+}
+
+/* ===== কাস্টম অর্ডার ===== */
+.custom-order {
+    padding: 60px 0;
+}
+
+.order-form {
+    max-width: 600px;
+    margin: 0 auto;
+    background: white;
+    padding: 40px;
+    border-radius: 16px;
+    border: 1px solid #e2e8f0;
+}
+
+.form-group {
+    margin-bottom: 25px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: #1e293b;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-family: inherit;
+    transition: all 0.2s;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.form-group textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+.submit-btn {
+    width: 100%;
+    padding: 14px;
+    background: #2563eb;
+    color: white;
+    border: none;
+    border-radius: 50px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.submit-btn:hover {
+    background: #1d4ed8;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(37, 99, 235, 0.2);
+}
+
+/* ===== অ্যাবাউট পৃষ্ঠা ===== */
+.about-section {
+    padding: 60px 0;
+}
+
+.about-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 50px;
+    align-items: center;
+}
+
+.about-text h2 {
+    font-size: 2.2rem;
+    margin-bottom: 25px;
+}
+
+.about-text p {
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+    color: #475569;
+}
+
+.about-image img {
+    width: 100%;
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.05);
+}
+
+/* পরিসংখ্যান সেকশন */
+.stats-section {
+    background: linear-gradient(135deg, #2563eb, #7c3aed);
+    padding: 60px 0;
+    color: white;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 30px;
+    text-align: center;
+}
+
+.stat-item h3 {
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: white;
+}
+
+.stat-item p {
+    font-size: 1.1rem;
+    opacity: 0.9;
+    color: white;
 }
 
 /* ===== ফুটার ===== */
@@ -381,35 +671,66 @@ p {
         display: none;
     }
     
+    h1 { font-size: 2rem; }
+    h2 { font-size: 1.8rem; }
+    
     .hero h2 {
-        font-size: 2.2rem;
-        padding: 0 20px;
+        font-size: 2rem;
     }
     
     .hero p {
-        font-size: 1.1rem;
-        padding: 0 20px;
+        font-size: 1rem;
     }
     
-    .section-title {
-        font-size: 1.8rem;
-        margin: 40px 0 30px;
+    .product-detail-container {
+        grid-template-columns: 1fr;
+        gap: 30px;
     }
     
-    .product-grid {
-        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    .about-content {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+    
+    .filter-buttons {
+        gap: 10px;
+    }
+    
+    .filter-btn {
+        padding: 8px 20px;
+        font-size: 0.85rem;
+    }
+    
+    .order-form {
+        padding: 30px 20px;
+    }
+    
+    .stats-grid {
+        grid-template-columns: 1fr 1fr;
         gap: 20px;
+    }
+    
+    .stat-item h3 {
+        font-size: 2.2rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .product-grid {
+        grid-template-columns: 1fr;
     }
     
     .service-grid {
         grid-template-columns: 1fr;
-        padding: 0 20px;
+    }
+    
+    .stats-grid {
+        grid-template-columns: 1fr;
     }
     
     .footer-content {
         grid-template-columns: 1fr;
         text-align: center;
-        gap: 30px;
     }
     
     .social-links {
