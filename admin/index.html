@@ -1,149 +1,905 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>AB Design - Admin Panel</title>
+    <title>AB Design - অ্যাডমিন ড্যাশবোর্ড</title>
     <style>
-        body { font-family: Arial, sans-serif; max-width: 600px; margin: 50px auto; padding: 20px; }
-        input, textarea, button { width: 100%; margin: 10px 0; padding: 10px; }
-        .preview { max-width: 200px; margin: 10px 0; }
-        .message { padding: 10px; margin: 10px 0; display: none; }
-        .success { background: #d4edda; color: #155724; display: block; }
-        .error { background: #f8d7da; color: #721c24; display: block; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f5f5;
+        }
+
+        .navbar {
+            background: #2c3e50;
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-brand {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .nav-brand span {
+            color: #3498db;
+        }
+
+        .logout-btn {
+            background: #e74c3c;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .logout-btn:hover {
+            background: #c0392b;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 80px auto 20px;
+            padding: 20px;
+        }
+
+        .token-section {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .token-input-group {
+            display: flex;
+            gap: 10px;
+        }
+
+        .token-input-group input {
+            flex: 1;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        .token-input-group button {
+            padding: 12px 25px;
+            background: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .token-input-group button:hover {
+            background: #2980b9;
+        }
+
+        .upload-section {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            display: none;
+        }
+
+        .upload-section.active {
+            display: block;
+        }
+
+        .section-title {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            color: #333;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+
+        .upload-form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            border-color: #3498db;
+            outline: none;
+        }
+
+        .preview-section {
+            text-align: center;
+        }
+
+        .preview-image {
+            max-width: 100%;
+            max-height: 200px;
+            border-radius: 5px;
+            border: 2px dashed #ddd;
+            padding: 10px;
+        }
+
+        .submit-btn {
+            background: #27ae60;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 16px;
+            width: 100%;
+            grid-column: span 2;
+        }
+
+        .submit-btn:hover {
+            background: #219a52;
+        }
+
+        .designs-section {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .filter-bar {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .filter-bar select,
+        .filter-bar input {
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        .filter-bar select {
+            min-width: 150px;
+        }
+
+        .filter-bar input {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .designs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .design-card {
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+            background: white;
+            position: relative;
+        }
+
+        .design-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+        }
+
+        .design-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-bottom: 1px solid #eee;
+        }
+
+        .design-info {
+            padding: 15px;
+        }
+
+        .design-name {
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        .design-category {
+            display: inline-block;
+            padding: 3px 10px;
+            background: #3498db;
+            color: white;
+            border-radius: 15px;
+            font-size: 12px;
+            margin-bottom: 10px;
+        }
+
+        .design-description {
+            color: #666;
+            font-size: 13px;
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
+
+        .design-date {
+            color: #999;
+            font-size: 11px;
+            margin-bottom: 10px;
+        }
+
+        .card-actions {
+            display: flex;
+            gap: 5px;
+            padding: 10px 15px 15px;
+            border-top: 1px solid #eee;
+        }
+
+        .edit-btn, .delete-btn, .view-btn {
+            flex: 1;
+            padding: 8px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 12px;
+            transition: background 0.3s;
+        }
+
+        .view-btn {
+            background: #3498db;
+            color: white;
+        }
+
+        .view-btn:hover {
+            background: #2980b9;
+        }
+
+        .edit-btn {
+            background: #f39c12;
+            color: white;
+        }
+
+        .edit-btn:hover {
+            background: #e67e22;
+        }
+
+        .delete-btn {
+            background: #e74c3c;
+            color: white;
+        }
+
+        .delete-btn:hover {
+            background: #c0392b;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 2000;
+        }
+
+        .modal.active {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .modal-content h3 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .save-btn {
+            flex: 1;
+            padding: 12px;
+            background: #27ae60;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .cancel-btn {
+            flex: 1;
+            padding: 12px;
+            background: #95a5a6;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .message {
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .message.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+            display: block;
+        }
+
+        .message.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+            display: block;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            font-size: 18px;
+            color: #666;
+        }
+
+        .stats-bar {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 10px;
+            flex: 1;
+            min-width: 150px;
+        }
+
+        .stat-card:nth-child(2) {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+
+        .stat-card:nth-child(3) {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+
+        .stat-number {
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            opacity: 0.9;
+        }
     </style>
 </head>
 <body>
-    <h2>📤 ডিজাইন আপলোড</h2>
-    
-    <div id="message" class="message"></div>
-    
-    <form id="uploadForm">
-        <input type="text" id="token" placeholder="GitHub Personal Access Token" required>
-        <input type="text" id="designName" placeholder="ডিজাইনের নাম" required>
-        <select id="category" required>
-            <option value="">ক্যাটাগরি নির্বাচন করুন</option>
-            <option value="logo">লোগো ডিজাইন</option>
-            <option value="banner">সোশ্যাল মিডিয়া ব্যানার</option>
-            <option value="card">বিজনেস কার্ড</option>
-        </select>
-        <input type="file" id="imageFile" accept="image/*" required>
-        <img id="preview" class="preview" style="display: none;">
-        <button type="submit">আপলোড করুন</button>
-    </form>
+    <div class="navbar">
+        <div class="nav-brand">AB Design <span>অ্যাডমিন</span></div>
+        <button class="logout-btn" onclick="logout()">লগআউট</button>
+    </div>
+
+    <div class="container">
+        <!-- টোকেন সেকশন -->
+        <div class="token-section" id="tokenSection">
+            <div class="token-input-group">
+                <input type="password" id="githubToken" placeholder="GitHub Personal Access Token দিন">
+                <button onclick="verifyToken()">ভেরিফাই করুন</button>
+            </div>
+        </div>
+
+        <!-- মেসেজ দেখানোর জায়গা -->
+        <div id="message" class="message"></div>
+
+        <!-- আপলোড সেকশন -->
+        <div class="upload-section" id="uploadSection">
+            <h2 class="section-title">📤 নতুন ডিজাইন আপলোড</h2>
+            <form id="uploadForm" class="upload-form">
+                <div class="form-group">
+                    <label>ডিজাইনের নাম *</label>
+                    <input type="text" id="designName" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>ক্যাটাগরি *</label>
+                    <select id="category" required>
+                        <option value="">নির্বাচন করুন</option>
+                        <option value="logo">লোগো ডিজাইন</option>
+                        <option value="banner">সোশ্যাল মিডিয়া ব্যানার</option>
+                        <option value="card">বিজনেস কার্ড</option>
+                        <option value="poster">পোস্টার/ফ্লায়ার</option>
+                        <option value="social">সোশ্যাল মিডিয়া পোস্ট</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>বিবরণ (ঐচ্ছিক)</label>
+                    <textarea id="description" rows="3" placeholder="ডিজাইন সম্পর্কে বিস্তারিত লিখুন"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label>ছবি *</label>
+                    <input type="file" id="imageFile" accept="image/*" required onchange="previewImage(this)">
+                </div>
+                
+                <div class="preview-section">
+                    <img id="preview" class="preview-image" src="https://via.placeholder.com/300x200?text=No+Image" alt="Preview">
+                </div>
+                
+                <button type="submit" class="submit-btn">📥 ডিজাইন আপলোড করুন</button>
+            </form>
+        </div>
+
+        <!-- ডিজাইন ম্যানেজমেন্ট সেকশন -->
+        <div class="designs-section" id="designsSection" style="display: none;">
+            <h2 class="section-title">📋 সব ডিজাইন</h2>
+            
+            <!-- স্ট্যাটস বার -->
+            <div class="stats-bar" id="statsBar"></div>
+            
+            <!-- ফিল্টার বার -->
+            <div class="filter-bar">
+                <select id="categoryFilter" onchange="filterDesigns()">
+                    <option value="all">সব ক্যাটাগরি</option>
+                    <option value="logo">লোগো</option>
+                    <option value="banner">ব্যানার</option>
+                    <option value="card">বিজনেস কার্ড</option>
+                    <option value="poster">পোস্টার</option>
+                    <option value="social">সোশ্যাল মিডিয়া</option>
+                </select>
+                
+                <input type="text" id="searchInput" placeholder="🔍 ডিজাইন খুঁজুন..." onkeyup="filterDesigns()">
+                
+                <select id="sortFilter" onchange="filterDesigns()">
+                    <option value="newest">সবচেয়ে নতুন</option>
+                    <option value="oldest">সবচেয়ে পুরনো</option>
+                    <option value="name">নাম অনুযায়ী</option>
+                </select>
+            </div>
+            
+            <!-- ডিজাইন গ্রিড -->
+            <div id="designsGrid" class="designs-grid">
+                <div class="loading">ডিজাইন লোড হচ্ছে...</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- এডিট মোডাল -->
+    <div class="modal" id="editModal">
+        <div class="modal-content">
+            <h3>✏️ ডিজাইন এডিট করুন</h3>
+            <form id="editForm">
+                <div class="form-group">
+                    <label>ডিজাইনের নাম</label>
+                    <input type="text" id="editName" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>ক্যাটাগরি</label>
+                    <select id="editCategory" required>
+                        <option value="logo">লোগো ডিজাইন</option>
+                        <option value="banner">সোশ্যাল মিডিয়া ব্যানার</option>
+                        <option value="card">বিজনেস কার্ড</option>
+                        <option value="poster">পোস্টার/ফ্লায়ার</option>
+                        <option value="social">সোশ্যাল মিডিয়া পোস্ট</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>বিবরণ</label>
+                    <textarea id="editDescription" rows="3"></textarea>
+                </div>
+                
+                <div class="modal-actions">
+                    <button type="submit" class="save-btn">সেভ করুন</button>
+                    <button type="button" class="cancel-btn" onclick="closeEditModal()">বাতিল</button>
+                </div>
+            </form>
+        </div>
+    </div>
 
     <script>
+        // গ্লোবাল ভেরিয়েবল
         const GITHUB_USERNAME = 'diptosarker001';
         const REPO_NAME = 'ab-design-company';
         const BRANCH = 'main';
+        
+        let currentToken = '';
+        let allDesigns = [];
+        let currentEditId = null;
 
-        document.getElementById('imageFile').addEventListener('change', function(e) {
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                document.getElementById('preview').style.display = 'block';
-                document.getElementById('preview').src = e.target.result;
+        // টোকেন ভেরিফাই
+        function verifyToken() {
+            const token = document.getElementById('githubToken').value;
+            if (!token) {
+                showMessage('দয়া করে GitHub Token দিন', 'error');
+                return;
             }
-            reader.readAsDataURL(this.files[0]);
-        });
+            
+            currentToken = token;
+            document.getElementById('tokenSection').style.display = 'none';
+            document.getElementById('uploadSection').classList.add('active');
+            document.getElementById('designsSection').style.display = 'block';
+            
+            loadAllDesigns();
+        }
 
+        // সব ডিজাইন লোড করুন
+        async function loadAllDesigns() {
+            try {
+                const response = await fetch(`https://api.github.com/repos/${GITHUB_USERNAME}/${REPO_NAME}/contents/products.json?ref=${BRANCH}`);
+                
+                if (!response.ok) {
+                    if (response.status === 404) {
+                        // products.json নেই, নতুন তৈরি করুন
+                        allDesigns = [];
+                        displayDesigns([]);
+                        return;
+                    }
+                    throw new Error('ডিজাইন লোড করতে ব্যর্থ');
+                }
+                
+                const data = await response.json();
+                const content = atob(data.content);
+                allDesigns = JSON.parse(content);
+                
+                displayDesigns(allDesigns);
+                updateStats();
+                
+            } catch (error) {
+                showMessage(error.message, 'error');
+            }
+        }
+
+        // ডিজাইন দেখান
+        function displayDesigns(designs) {
+            const grid = document.getElementById('designsGrid');
+            
+            if (designs.length === 0) {
+                grid.innerHTML = '<div style="text-align: center; padding: 40px; grid-column: 1/-1;">কোনো ডিজাইন পাওয়া যায়নি</div>';
+                return;
+            }
+            
+            grid.innerHTML = designs.map(design => `
+                <div class="design-card">
+                    <img src="${design.image}" class="design-image" alt="${design.name}" onerror="this.src='https://via.placeholder.com/300x200?text=Image+Error'">
+                    <div class="design-info">
+                        <div class="design-name">${design.name}</div>
+                        <span class="design-category">${getCategoryName(design.category)}</span>
+                        ${design.description ? `<div class="design-description">${design.description}</div>` : ''}
+                        <div class="design-date">${new Date(design.date).toLocaleDateString('bn-BD')}</div>
+                    </div>
+                    <div class="card-actions">
+                        <button class="view-btn" onclick="viewDesign('${design.image}')">👁️ দেখুন</button>
+                        <button class="edit-btn" onclick="openEditModal(${design.id})">✏️ এডিট</button>
+                        <button class="delete-btn" onclick="deleteDesign(${design.id})">🗑️ ডিলিট</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // ক্যাটাগরির নাম বাংলায়
+        function getCategoryName(category) {
+            const categories = {
+                'logo': 'লোগো',
+                'banner': 'ব্যানার',
+                'card': 'বিজনেস কার্ড',
+                'poster': 'পোস্টার',
+                'social': 'সোশ্যাল মিডিয়া'
+            };
+            return categories[category] || category;
+        }
+
+        // স্ট্যাটস আপডেট
+        function updateStats() {
+            const stats = {
+                total: allDesigns.length,
+                logo: allDesigns.filter(d => d.category === 'logo').length,
+                banner: allDesigns.filter(d => d.category === 'banner').length,
+                card: allDesigns.filter(d => d.category === 'card').length,
+                poster: allDesigns.filter(d => d.category === 'poster').length,
+                social: allDesigns.filter(d => d.category === 'social').length
+            };
+            
+            document.getElementById('statsBar').innerHTML = `
+                <div class="stat-card">
+                    <div class="stat-number">${stats.total}</div>
+                    <div class="stat-label">মোট ডিজাইন</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">${stats.logo + stats.banner + stats.card + stats.poster + stats.social}</div>
+                    <div class="stat-label">ক্যাটাগরি</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">${new Date().toLocaleDateString('bn-BD')}</div>
+                    <div class="stat-label">সর্বশেষ আপডেট</div>
+                </div>
+            `;
+        }
+
+        // ফিল্টার ডিজাইন
+        function filterDesigns() {
+            const category = document.getElementById('categoryFilter').value;
+            const search = document.getElementById('searchInput').value.toLowerCase();
+            const sort = document.getElementById('sortFilter').value;
+            
+            let filtered = [...allDesigns];
+            
+            // ক্যাটাগরি ফিল্টার
+            if (category !== 'all') {
+                filtered = filtered.filter(d => d.category === category);
+            }
+            
+            // সার্চ ফিল্টার
+            if (search) {
+                filtered = filtered.filter(d => 
+                    d.name.toLowerCase().includes(search) || 
+                    (d.description && d.description.toLowerCase().includes(search))
+                );
+            }
+            
+            // সর্ট
+            filtered.sort((a, b) => {
+                if (sort === 'newest') return new Date(b.date) - new Date(a.date);
+                if (sort === 'oldest') return new Date(a.date) - new Date(b.date);
+                if (sort === 'name') return a.name.localeCompare(b.name);
+            });
+            
+            displayDesigns(filtered);
+        }
+
+        // ইমেজ প্রিভিউ
+        function previewImage(input) {
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('preview').src = e.target.result;
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        // আপলোড ফর্ম সাবমিট
         document.getElementById('uploadForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             
-            const messageDiv = document.getElementById('message');
-            messageDiv.className = 'message';
-            messageDiv.textContent = 'আপলোড হচ্ছে...';
-            messageDiv.style.display = 'block';
-
             try {
-                const token = document.getElementById('token').value;
-                const designName = document.getElementById('designName').value;
+                const name = document.getElementById('designName').value;
                 const category = document.getElementById('category').value;
+                const description = document.getElementById('description').value;
                 const imageFile = document.getElementById('imageFile').files[0];
-
-                // ফাইলকে Base64 তে কনভার্ট করুন
+                
+                showMessage('আপলোড হচ্ছে...', 'success');
+                
+                // ছবি আপলোড
                 const reader = new FileReader();
                 reader.readAsDataURL(imageFile);
                 
                 reader.onload = async function() {
                     const base64Data = reader.result.split(',')[1];
-                    
-                    // ইউনিক ফাইলনেম তৈরি
                     const timestamp = Date.now();
                     const filename = `designs/${category}/${timestamp}-${imageFile.name}`;
                     
-                    // GitHub API কল
+                    // GitHub এ আপলোড
                     const response = await fetch(`https://api.github.com/repos/${GITHUB_USERNAME}/${REPO_NAME}/contents/${filename}`, {
                         method: 'PUT',
                         headers: {
-                            'Authorization': `token ${token}`,
+                            'Authorization': `token ${currentToken}`,
                             'Content-Type': 'application/json',
                         },
                         body: JSON.stringify({
-                            message: `Add new design: ${designName}`,
+                            message: `Add new design: ${name}`,
                             content: base64Data,
                             branch: BRANCH
                         })
                     });
-
-                    if (!response.ok) throw new Error('আপলোড ব্যর্থ হয়েছে');
-
+                    
+                    if (!response.ok) throw new Error('আপলোড ব্যর্থ');
+                    
                     const data = await response.json();
                     
-                    // ডিজাইনের তথ্য products.json এ সেভ করুন
-                    await updateProductsJson(designName, category, data.content.download_url, token);
+                    // products.json আপডেট
+                    const imageUrl = data.content.download_url;
                     
-                    messageDiv.className = 'message success';
-                    messageDiv.textContent = '✅ ডিজাইন সফলভাবে আপলোড হয়েছে!';
+                    allDesigns.push({
+                        id: timestamp,
+                        name: name,
+                        category: category,
+                        description: description,
+                        image: imageUrl,
+                        date: new Date().toISOString()
+                    });
                     
-                    // ফর্ম রিসেট
+                    await saveProductsJson();
+                    
+                    showMessage('✅ ডিজাইন সফলভাবে আপলোড হয়েছে!', 'success');
                     document.getElementById('uploadForm').reset();
-                    document.getElementById('preview').style.display = 'none';
+                    document.getElementById('preview').src = 'https://via.placeholder.com/300x200?text=No+Image';
+                    
+                    filterDesigns();
+                    updateStats();
                 };
                 
             } catch (error) {
-                messageDiv.className = 'message error';
-                messageDiv.textContent = '❌ ' + error.message;
+                showMessage('❌ ' + error.message, 'error');
             }
         });
 
-        async function updateProductsJson(designName, category, imageUrl, token) {
+        // products.json সেভ করুন
+        async function saveProductsJson() {
             try {
-                // প্রথমে current products.json পড়ুন
+                // আগের ফাইল পড়ুন SHA পাওয়ার জন্য
                 const getResponse = await fetch(`https://api.github.com/repos/${GITHUB_USERNAME}/${REPO_NAME}/contents/products.json?ref=${BRANCH}`);
-                let products = [];
                 let sha = null;
                 
                 if (getResponse.ok) {
                     const fileData = await getResponse.json();
                     sha = fileData.sha;
-                    const content = atob(fileData.content);
-                    products = JSON.parse(content);
                 }
                 
-                // নতুন ডিজাইন যোগ করুন
-                products.push({
-                    id: Date.now(),
-                    name: designName,
-                    category: category,
-                    image: imageUrl,
-                    date: new Date().toISOString()
-                });
-                
-                // আপডেট করা products.json আপলোড করুন
+                // আপডেট করা ফাইল আপলোড
                 await fetch(`https://api.github.com/repos/${GITHUB_USERNAME}/${REPO_NAME}/contents/products.json`, {
                     method: 'PUT',
                     headers: {
-                        'Authorization': `token ${token}`,
+                        'Authorization': `token ${currentToken}`,
                         'Content-Type': 'application/json',
                     },
                     body: JSON.stringify({
-                        message: `Update products.json with new ${category}`,
-                        content: btoa(JSON.stringify(products, null, 2)),
+                        message: 'Update products.json',
+                        content: btoa(JSON.stringify(allDesigns, null, 2)),
                         sha: sha,
                         branch: BRANCH
                     })
                 });
+                
             } catch (error) {
-                console.error('products.json update error:', error);
+                console.error('Save error:', error);
+                throw error;
             }
+        }
+
+        // এডিট মোডাল খুলুন
+        function openEditModal(id) {
+            const design = allDesigns.find(d => d.id === id);
+            if (!design) return;
+            
+            currentEditId = id;
+            document.getElementById('editName').value = design.name;
+            document.getElementById('editCategory').value = design.category;
+            document.getElementById('editDescription').value = design.description || '';
+            
+            document.getElementById('editModal').classList.add('active');
+        }
+
+        // এডিট মোডাল বন্ধ করুন
+        function closeEditModal() {
+            document.getElementById('editModal').classList.remove('active');
+            currentEditId = null;
+        }
+
+        // এডিট ফর্ম সাবমিট
+        document.getElementById('editForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            try {
+                const design = allDesigns.find(d => d.id === currentEditId);
+                if (!design) return;
+                
+                design.name = document.getElementById('editName').value;
+                design.category = document.getElementById('editCategory').value;
+                design.description = document.getElementById('editDescription').value;
+                
+                await saveProductsJson();
+                
+                showMessage('✅ ডিজাইন আপডেট করা হয়েছে', 'success');
+                filterDesigns();
+                updateStats();
+                closeEditModal();
+                
+            } catch (error) {
+                showMessage('❌ ' + error.message, 'error');
+            }
+        });
+
+        // ডিজাইন ডিলিট
+        async function deleteDesign(id) {
+            if (!confirm('আপনি কি নিশ্চিত? এই ডিজাইন ডিলিট হয়ে যাবে।')) return;
+            
+            try {
+                allDesigns = allDesigns.filter(d => d.id !== id);
+                await saveProductsJson();
+                
+                showMessage('✅ ডিজাইন ডিলিট করা হয়েছে', 'success');
+                filterDesigns();
+                updateStats();
+                
+            } catch (error) {
+                showMessage('❌ ' + error.message, 'error');
+            }
+        }
+
+        // ডিজাইন দেখুন
+        function viewDesign(imageUrl) {
+            window.open(imageUrl, '_blank');
+        }
+
+        // মেসেজ দেখান
+        function showMessage(text, type) {
+            const msgDiv = document.getElementById('message');
+            msgDiv.textContent = text;
+            msgDiv.className = `message ${type}`;
+            
+            setTimeout(() => {
+                msgDiv.style.display = 'none';
+            }, 5000);
+        }
+
+        // লগআউট
+        function logout() {
+            currentToken = '';
+            document.getElementById('tokenSection').style.display = 'block';
+            document.getElementById('uploadSection').classList.remove('active');
+            document.getElementById('designsSection').style.display = 'none';
+            document.getElementById('githubToken').value = '';
         }
     </script>
 </body>
